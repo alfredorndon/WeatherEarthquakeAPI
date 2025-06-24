@@ -1,0 +1,31 @@
+{
+  "name": "weatherearthquakeapi",
+  "version": "1.0.0",
+  "description": "",
+  "main": "scr/index.js",
+  "scripts": {
+    "start": "node src/index.js",
+    "test": "jest"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/alfredorndon/WeatherEarthquakeAPI.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/alfredorndon/WeatherEarthquakeAPI/issues"
+  },
+  "homepage": "https://github.com/alfredorndon/WeatherEarthquakeAPI#readme",
+  "dependencies": {
+    "dotenv": "^16.5.0",
+    "express": "^5.1.0",
+    "mongodb": "^6.17.0",
+    "mongoose": "^8.16.0"
+  },
+  "devDependencies": {
+    "jest": "^30.0.2",
+    "supertest": "^7.1.1"
+  }
+}
