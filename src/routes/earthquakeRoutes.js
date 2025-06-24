@@ -1,28 +1,12 @@
 const express = require('express');
 const router = express.Router();
-const EarthquakeReport = require('../models/EarthquakeReport');
+const earthquakeReportController = require('../controllers/earthquakeReportController');
+const { validateEarthquakeReport } = require('../middleware/earthquakeValidation');
 
-// POST para crear un reporte de sismo personalizado
-router.post('/', async (req, res) => {
-  try {
-    const newReport = new EarthquakeReport(req.body);
-    await newReport.save();
-    res.status(201).json(newReport);
-  } catch (err) {
-    res.status(400).json({ message: err.message });
-  }
-});
-
-// GET para obtener todos los reportes de sismos personalizados
-router.get('/', async (req, res) => {
-  try {
-    const reports = await EarthquakeReport.find();
-    res.json(reports);
-  } catch (err) {
-    res.status(500).json({ message: err.message });
-  }
-});
-
-// Puedes añadir rutas para GET por ID, PUT, DELETE aquí
+// Rutas para reportes personalizados de sismos
+router.post('/', validateEarthquakeReport, earthquakeReportController.createReport); // Guarda un reporte de sismo personalizado
+router.get('/', earthquakeReportController.getAllReports); // Obtiene todos los reportes
+router.get('/history/:location', earthquakeReportController.getHistoryByLocation); // Historial por ubicación
+router.delete('/:id', earthquakeReportController.deleteReport); // Elimina un reporte
 
 module.exports = router; 
