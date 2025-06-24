@@ -29,7 +29,7 @@ exports.getEarthquakes = async (params = {}) => {
         console.error('Error fetching data from USGS:', error.message);
         if (error.response) {
             throw new Error(`USGS API error: ${error.response.status} - ${error.response.data.message || error.response.statusText}`);
-        } else if (error.request) {
+        } else if (error.request || error.message === 'Network Error') {
             throw new Error('No response from USGS API');
         } else {
             throw new Error(`Error in USGS service: ${error.message}`);

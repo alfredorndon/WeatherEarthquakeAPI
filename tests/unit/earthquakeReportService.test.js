@@ -1,47 +1,46 @@
-const mongoose = require('mongoose');
 const EarthquakeReport = require('../../src/models/EarthquakeReport');
 const earthquakeReportService = require('../../src/services/earthquakeReportService');
 
 describe('earthquakeReportService', () => {
-  beforeAll(async () => {
-    await mongoose.connect(process.env.MONGO_URI_TEST || process.env.MONGO_URI);
-  });
-
-  afterEach(async () => {
-    await EarthquakeReport.deleteMany();
-  });
-
-  afterAll(async () => {
-    await mongoose.connection.close();
+  beforeEach(() => {
+    jest.clearAllMocks();
   });
 
   it('should create an earthquake report', async () => {
-    const data = { magnitude: 5.2, depth: 10, location: 'Los Andes', date: new Date() };
-    const report = await earthquakeReportService.createEarthquakeReport(data);
-    expect(report).toHaveProperty('_id');
-    expect(report.location).toBe('Los Andes');
+    const mockData = { magnitude: 5.2, depth: 10, location: 'Los Andes', date: new Date() };
+    const mockReport = { _id: '123', ...mockData };
+    jest.spyOn(EarthquakeReport.prototype, 'save').mockResolvedValue(mockReport);
+    const result = await earthquakeReportService.createEarthquakeReport(mockData);
+    expect(result).toEqual(mockReport);
   });
 
   it('should get all earthquake reports', async () => {
-    await earthquakeReportService.createEarthquakeReport({ magnitude: 5.2, depth: 10, location: 'Los Andes', date: new Date() });
-    const reports = await earthquakeReportService.getAllEarthquakeReports();
-    expect(reports.length).toBe(1);
-    expect(reports[0].location).toBe('Los Andes');
+    const mockReports = [
+      { _id: '123', magnitude: 5.2, depth: 10, location: 'Los Andes', date: new Date() }
+    ];
+    EarthquakeReport.find = jest.fn().mockResolvedValue(mockReports);
+    const result = await earthquakeReportService.getAllEarthquakeReports();
+    expect(result).toEqual(mockReports);
+    expect(EarthquakeReport.find).toHaveBeenCalled();
   });
 
   it('should get earthquake history by location', async () => {
-    await earthquakeReportService.createEarthquakeReport({ magnitude: 5.2, depth: 10, location: 'Los Andes', date: new Date() });
-    await earthquakeReportService.createEarthquakeReport({ magnitude: 4.8, depth: 8, location: 'Caracas', date: new Date() });
-    const reports = await earthquakeReportService.getEarthquakeHistoryByLocation('Los Andes');
-    expect(reports.length).toBe(1);
-    expect(reports[0].location).toBe('Los Andes');
+    const mockReports = [
+      { _id: '123', magnitude: 5.2, depth: 10, location: 'Los Andes', date: new Date() }
+    ];
+    const sortMock = jest.fn().mockResolvedValue(mockReports);
+    EarthquakeReport.find = jest.fn().mockReturnValue({ sort: sortMock });
+    const result = await earthquakeReportService.getEarthquakeHistoryByLocation('Los Andes');
+    expect(result).toEqual(mockReports);
+    expect(EarthquakeReport.find).toHaveBeenCalledWith({ location: new RegExp('Los Andes', 'i') });
+    expect(sortMock).toHaveBeenCalledWith({ date: -1 });
   });
 
   it('should delete an earthquake report', async () => {
-    const report = await earthquakeReportService.createEarthquakeReport({ magnitude: 5.2, depth: 10, location: 'Los Andes', date: new Date() });
-    const deleted = await earthquakeReportService.deleteEarthquakeReport(report._id);
-    expect(deleted).not.toBeNull();
-    const found = await EarthquakeReport.findById(report._id);
-    expect(found).toBeNull();
+    const mockDeletedReport = { _id: '123', location: 'Los Andes' };
+    EarthquakeReport.findByIdAndDelete = jest.fn().mockResolvedValue(mockDeletedReport);
+    const result = await earthquakeReportService.deleteEarthquakeReport('123');
+    expect(result).toEqual(mockDeletedReport);
+    expect(EarthquakeReport.findByIdAndDelete).toHaveBeenCalledWith('123');
   });
 }); 

@@ -8,8 +8,10 @@ const swaggerJsdoc = require('swagger-jsdoc');
 
 const app = express();
 
-// Conectar a la base de datos
-connectDB();
+// Conectar a la base de datos solo si no estamos en modo test
+if (process.env.NODE_ENV !== 'test') {
+    connectDB();
+}
 
 // Middleware para parsear JSON en las solicitudes
 app.use(express.json());
@@ -86,6 +88,10 @@ app.use((err, req, res, next) => {
     res.status(500).json({ message: 'Algo salió mal en el servidor!', error: err.message });
 });
 
-const PORT = process.env.PORT || 5000; // Usa el puerto del .env o 5000 por defecto
+// Solo iniciar el servidor si no estamos en modo test
+if (process.env.NODE_ENV !== 'test') {
+    const PORT = process.env.PORT || 5000;
+    app.listen(PORT, () => console.log(`Server running on port ${PORT}`));
+}
 
-app.listen(PORT, () => console.log(`Server running on port ${PORT}`));
+module.exports = app;
