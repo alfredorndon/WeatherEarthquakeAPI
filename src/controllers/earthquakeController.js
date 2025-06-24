@@ -1,5 +1,4 @@
 const usgsService = require('../services/usgsService');
-// const emscService = require('../services/emscService');
 
 exports.getEarthquakeData = async (req, res) => {
     const { source, country, minmagnitude, limit, starttime, endtime } = req.query;
@@ -16,8 +15,6 @@ exports.getEarthquakeData = async (req, res) => {
             if (country) {
                 data = data.filter(eq => eq.location && eq.location.toLowerCase().includes(country.toLowerCase()));
             }
-        } else if (source === 'emsc') {
-            return res.status(501).json({ message: 'La integración con EMSC no está completamente implementada o requiere un parseo específico. Por favor, use "usgs" por ahora.' });
         } else {
             return res.status(400).json({ message: 'Fuente sísmica inválida o faltante. Use "usgs".' });
         }
