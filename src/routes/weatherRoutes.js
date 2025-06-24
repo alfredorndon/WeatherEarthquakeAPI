@@ -1,12 +1,16 @@
 const express = require('express');
 const router = express.Router();
 const weatherReportController = require('../controllers/weatherReportController');
+const weatherController = require('../controllers/weatherController');
 const { validateWeatherReport } = require('../middleware/weatherValidation');
 
-// Rutas para reportes personalizados de clima
-router.post('/', validateWeatherReport, weatherReportController.createReport); // Guarda un reporte climático personalizado
-router.get('/', weatherReportController.getAllReports); // Obtiene todos los reportes
-router.get('/history/:city', weatherReportController.getHistoryByCity); // Historial por ciudad
-router.delete('/:id', weatherReportController.deleteReport); // Elimina un reporte
+// Rutas para reportes personalizados (CRUD)
+router.post('/reports', validateWeatherReport, weatherReportController.createReport);
+router.get('/reports', weatherReportController.getAllReports);
+router.get('/reports/history/:city', weatherReportController.getHistoryByCity);
+router.delete('/reports/:id', weatherReportController.deleteReport);
+
+// Rutas para datos climáticos de APIs externas
+router.get('/', weatherController.getWeatherData);
 
 module.exports = router; 

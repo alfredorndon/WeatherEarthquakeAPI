@@ -1,12 +1,17 @@
 const express = require('express');
 const router = express.Router();
 const earthquakeReportController = require('../controllers/earthquakeReportController');
+const earthquakeController = require('../controllers/earthquakeController');
 const { validateEarthquakeReport } = require('../middleware/earthquakeValidation');
 
-// Rutas para reportes personalizados de sismos
-router.post('/', validateEarthquakeReport, earthquakeReportController.createReport); // Guarda un reporte de sismo personalizado
-router.get('/', earthquakeReportController.getAllReports); // Obtiene todos los reportes
-router.get('/history/:location', earthquakeReportController.getHistoryByLocation); // Historial por ubicación
-router.delete('/:id', earthquakeReportController.deleteReport); // Elimina un reporte
+// Rutas para reportes personalizados (CRUD)
+router.post('/reports', validateEarthquakeReport, earthquakeReportController.createReport);
+router.get('/reports', earthquakeReportController.getAllReports);
+// Historial por país (opcional, puedes implementar getHistoryByCountry en el controlador si lo deseas)
+// router.get('/reports/history/:country', earthquakeReportController.getHistoryByCountry);
+router.delete('/reports/:id', earthquakeReportController.deleteReport);
+
+// Rutas para datos sísmicos de APIs externas
+router.get('/', earthquakeController.getEarthquakeData);
 
 module.exports = router; 
