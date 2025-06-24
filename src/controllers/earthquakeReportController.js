@@ -28,6 +28,16 @@ exports.getHistoryByLocation = async (req, res) => {
     }
 };
 
+exports.getHistoryByCountry = async (req, res) => {
+    try {
+        const { country } = req.params;
+        const reports = await earthquakeReportService.getEarthquakeHistoryByLocation(country);
+        res.status(200).json(reports);
+    } catch (error) {
+        res.status(500).json({ message: error.message });
+    }
+};
+
 exports.deleteReport = async (req, res) => {
     try {
         const { id } = req.params;
