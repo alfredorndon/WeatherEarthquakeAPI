@@ -5,6 +5,8 @@ const weatherRoutes = require('./routes/weatherRoutes');
 const earthquakeRoutes = require('./routes/earthquakeRoutes');
 const swaggerUi = require('swagger-ui-express');
 const swaggerJsdoc = require('swagger-jsdoc');
+const authRoutes = require('./routes/authRoutes');
+const { protect } = require('./middleware/authMiddleware');
 
 const app = express();
 
@@ -35,6 +37,13 @@ const swaggerOptions = {
             }
         ],
         components: {
+            securitySchemes: {
+                bearerAuth: {
+                    type: 'http',
+                    scheme: 'bearer',
+                    bearerFormat: 'JWT',
+                },
+            },
             schemas: {
                 WeatherReport: {
                     type: 'object',
@@ -78,6 +87,7 @@ app.get('/', (req, res) => {
 
 app.use('/api/weather', weatherRoutes);
 app.use('/api/earthquakes', earthquakeRoutes);
+app.use('/api/auth', authRoutes);
 
 app.use((req, res, next) => {
     res.status(404).json({ message: 'Ruta no encontrada' });

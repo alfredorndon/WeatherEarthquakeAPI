@@ -38,28 +38,9 @@ Crea un archivo `.env` con las siguientes variables:
 OPENWEATHER_API_KEY=f1b1b57805fcedf5f43375aeb152d669
 WEATHERAPI_API_KEY=91ae9ee117764a9bba0192139252406
 MONGO_URI=tu_uri_de_mongodb
+JWT_SECRET=tu_clave_secreta_generada_aqui_una_cadena_larga_y_aleatoria_no_la_pierdas_y_no_la_subas_a_github
+JWT_EXPIRES_IN=1h # Puedes ajustar esto, ej. 8h, 1d
 ```
 
 ## Instalación de Dependencias
 ```
-npm install
-```
-
-## Ejecución
-```
-npm start
-```
-
-## Pruebas
-- Ejecuta todas las pruebas con:
-```
-npm test
-```
-- Las pruebas de integración para APIs externas usan mocks y no consumen tus créditos de API.
-
-## Resumen de Cambios Recientes
-- Integración de servicios y controladores para OpenWeatherMap, WeatherAPI y USGS.
-- Nuevos endpoints RESTful para datos externos y CRUD.
-- Documentación Swagger interactiva.
-- Pruebas de integración y unitarias para servicios y endpoints principales.
-- Uso de variables de entorno para las API keys.
