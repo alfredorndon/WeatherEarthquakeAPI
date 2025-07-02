@@ -2,6 +2,9 @@ const usgsService = require('../services/usgsService');
 
 exports.getEarthquakeData = async (req, res) => {
     const { source, country, minmagnitude, limit, starttime, endtime } = req.query;
+    if (minmagnitude !== undefined && minmagnitude !== '' && isNaN(Number(minmagnitude))) {
+        return res.status(400).json({ message: 'El parámetro "minmagnitude" debe ser numérico.' });
+    }
     try {
         let data;
         const queryParams = {

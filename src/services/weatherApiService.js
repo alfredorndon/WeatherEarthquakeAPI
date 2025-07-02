@@ -1,4 +1,5 @@
 const axios = require('axios');
+const handleAxiosError = require('./axiosErrorHandler');
 
 const API_KEY = process.env.WEATHERAPI_API_KEY;
 const BASE_URL = 'http://api.weatherapi.com/v1';
@@ -29,12 +30,6 @@ exports.getWeatherDataByCity = async (city) => {
         };
     } catch (error) {
         console.error('Error fetching data from WeatherAPI:', error.message);
-        if (error.response) {
-            throw new Error(`WeatherAPI error: ${error.response.status} - ${error.response.data.error.message}`);
-        } else if (error.request) {
-            throw new Error('No response from WeatherAPI');
-        } else {
-            throw new Error(`Error in WeatherAPI service: ${error.message}`);
-        }
+        throw handleAxiosError(error, 'WeatherAPI');
     }
 }; 

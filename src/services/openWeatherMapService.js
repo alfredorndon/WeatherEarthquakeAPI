@@ -1,4 +1,5 @@
 const axios = require('axios');
+const handleAxiosError = require('./axiosErrorHandler');
 
 const API_KEY = process.env.OPENWEATHER_API_KEY;
 const BASE_URL = 'https://api.openweathermap.org/data/2.5';
@@ -31,12 +32,6 @@ exports.getWeatherDataByCity = async (city) => {
         };
     } catch (error) {
         console.error('Error fetching data from OpenWeatherMap:', error.message);
-        if (error.response) {
-            throw new Error(`OpenWeatherMap API error: ${error.response.status} - ${error.response.data.message}`);
-        } else if (error.request) {
-            throw new Error('No response from OpenWeatherMap API');
-        } else {
-            throw new Error(`Error in OpenWeatherMap service: ${error.message}`);
-        }
+        throw handleAxiosError(error, 'OpenWeatherMap');
     }
 }; 
