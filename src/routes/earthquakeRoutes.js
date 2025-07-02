@@ -2,6 +2,7 @@ const express = require('express');
 const router = express.Router();
 const earthquakeReportController = require('../controllers/earthquakeReportController');
 const earthquakeController = require('../controllers/earthquakeController');
+const { protect } = require('../middleware/authMiddleware');
 // const { validateEarthquakeReport } = require('../middleware/earthquakeValidation'); // Si tienes un middleware de validación para reportes
 
 // ======================================
@@ -42,7 +43,7 @@ const earthquakeController = require('../controllers/earthquakeController');
  *       400:
  *         description: Datos de entrada inválidos.
  */
-router.post('/reports', /* validateEarthquakeReport, */ earthquakeReportController.createReport);
+router.post('/reports', protect, /* validateEarthquakeReport, */ earthquakeReportController.createReport);
 
 /**
  * @swagger
@@ -62,7 +63,7 @@ router.post('/reports', /* validateEarthquakeReport, */ earthquakeReportControll
  *       500:
  *         description: Error interno del servidor.
  */
-router.get('/reports', earthquakeReportController.getAllReports);
+router.get('/reports', protect, earthquakeReportController.getAllReports);
 
 /**
  * @swagger
@@ -89,7 +90,7 @@ router.get('/reports', earthquakeReportController.getAllReports);
  *       500:
  *         description: Error interno del servidor.
  */
-router.get('/reports/history/:country', earthquakeReportController.getHistoryByCountry);
+router.get('/reports/history/:country', protect, earthquakeReportController.getHistoryByCountry);
 
 /**
  * @swagger
@@ -112,7 +113,7 @@ router.get('/reports/history/:country', earthquakeReportController.getHistoryByC
  *       500:
  *         description: Error interno del servidor.
  */
-router.delete('/reports/:id', earthquakeReportController.deleteReport);
+router.delete('/reports/:id', protect, earthquakeReportController.deleteReport);
 
 // ======================================
 // Rutas para Datos Sísmicos de APIs EXTERNAS (en tiempo real)
