@@ -1,4 +1,5 @@
 const axios = require('axios');
+const handleAxiosError = require('./axiosErrorHandler');
 
 const BASE_URL = 'https://earthquake.usgs.gov/fdsnws/event/1/query';
 
@@ -27,12 +28,6 @@ exports.getEarthquakes = async (params = {}) => {
         }));
     } catch (error) {
         console.error('Error fetching data from USGS:', error.message);
-        if (error.response) {
-            throw new Error(`USGS API error: ${error.response.status} - ${error.response.data.message || error.response.statusText}`);
-        } else if (error.request || error.message === 'Network Error') {
-            throw new Error('No response from USGS API');
-        } else {
-            throw new Error(`Error in USGS service: ${error.message}`);
-        }
+        throw handleAxiosError(error, 'USGS');
     }
 }; 

@@ -139,7 +139,8 @@ router.delete('/reports/:id', earthquakeReportController.deleteReport);
  *         schema:
  *           type: string
  *         required: false
- *         description: Nombre del país para filtrar los sismos. (Nota: USGS no filtra directamente por país, se filtra post-request)
+ *         description: Nombre del país para filtrar los sismos.
+ *         # Nota: USGS no filtra directamente por país, se filtra post-request
  *       - in: query
  *         name: minmagnitude
  *         schema:
