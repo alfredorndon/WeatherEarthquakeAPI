@@ -9,6 +9,10 @@ jest.mock('../../src/services/earthquakeReportService', () => ({
 
 const earthquakeReportService = require('../../src/services/earthquakeReportService');
 
+jest.mock('../../src/middleware/authMiddleware', () => ({
+  protect: (req, res, next) => next()
+}));
+
 describe('Earthquake Reports API', () => {
   beforeEach(() => {
     jest.clearAllMocks();

@@ -9,6 +9,10 @@ jest.mock('../../src/services/weatherReportService', () => ({
 
 const weatherReportService = require('../../src/services/weatherReportService');
 
+jest.mock('../../src/middleware/authMiddleware', () => ({
+  protect: (req, res, next) => next()
+}));
+
 describe('Weather Reports API', () => {
   beforeEach(() => {
     jest.clearAllMocks();
