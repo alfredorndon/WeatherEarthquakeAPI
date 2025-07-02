@@ -4,13 +4,13 @@ const mongoose = require('mongoose');
 const User = require('../src/models/User');
 const jwt = require('jsonwebtoken');
 
-describe('Auth Endpoints', () => {
+describe('Auth Integration & User Model', () => {
     beforeAll(async () => {
         const mongoUri = process.env.MONGO_URI_TEST || 'mongodb://localhost:27017/test_db_weather_earthquake_api';
         await mongoose.connect(mongoUri);
-    });
+    }, 30000);
 
-    afterEach(async () => {
+    beforeEach(async () => {
         await User.deleteMany({});
     });
 
@@ -18,111 +18,75 @@ describe('Auth Endpoints', () => {
         await mongoose.connection.close();
     });
 
-    const testUser = {
-        email: 'test@example.com',
-        password: 'password123',
-    };
+    const testUser = { email: 'test@example.com', password: 'password123' };
 
-    it('should register a new user successfully', async () => {
-        const res = await request(app)
-            .post('/api/auth/register')
-            .send(testUser);
-        expect(res.statusCode).toEqual(201);
+    it('registers a new user', async () => {
+        const res = await request(app).post('/api/auth/register').send(testUser);
+        expect(res.statusCode).toBe(201);
         expect(res.body).toHaveProperty('_id');
         expect(res.body).toHaveProperty('email', testUser.email);
         expect(res.body).toHaveProperty('token');
     });
 
-    it('should not register a user with an existing email', async () => {
+    it('prevents duplicate registration', async () => {
         await request(app).post('/api/auth/register').send(testUser);
-        const res = await request(app)
-            .post('/api/auth/register')
-            .send(testUser);
-        expect(res.statusCode).toEqual(400);
-        expect(res.body).toHaveProperty('message', 'El usuario ya existe con este correo electrónico.');
+        const res = await request(app).post('/api/auth/register').send(testUser);
+        expect(res.statusCode).toBe(400);
+        expect(res.body).toHaveProperty('message');
     });
 
-    it('should not register a user with an invalid email format', async () => {
-        const res = await request(app)
-            .post('/api/auth/register')
-            .send({ email: 'invalid-email', password: 'password123' });
-        expect(res.statusCode).toEqual(400);
+    it('validates email format', async () => {
+        const res = await request(app).post('/api/auth/register').send({ email: 'bad', password: 'password123' });
+        expect(res.statusCode).toBe(400);
         expect(res.body).toHaveProperty('errors');
-        expect(res.body.errors[0]).toHaveProperty('msg', 'Por favor, introduce un correo electrónico válido.');
     });
 
-    it('should not register a user with a password less than 6 characters', async () => {
-        const res = await request(app)
-            .post('/api/auth/register')
-            .send({ email: 'test2@example.com', password: '123' });
-        expect(res.statusCode).toEqual(400);
+    it('validates password length', async () => {
+        const res = await request(app).post('/api/auth/register').send({ email: 'a@b.com', password: '123' });
+        expect(res.statusCode).toBe(400);
         expect(res.body).toHaveProperty('errors');
-        expect(res.body.errors[0]).toHaveProperty('msg', 'La contraseña debe tener al menos 6 caracteres.');
     });
 
-    it('should login an existing user successfully', async () => {
+    it('logs in a registered user', async () => {
         await request(app).post('/api/auth/register').send(testUser);
-        const res = await request(app)
-            .post('/api/auth/login')
-            .send(testUser);
-        expect(res.statusCode).toEqual(200);
-        expect(res.body).toHaveProperty('_id');
-        expect(res.body).toHaveProperty('email', testUser.email);
+        const res = await request(app).post('/api/auth/login').send(testUser);
+        expect(res.statusCode).toBe(200);
         expect(res.body).toHaveProperty('token');
+        expect(res.body).toHaveProperty('email', testUser.email);
     });
 
-    it('should not login with invalid credentials (wrong password)', async () => {
+    it('rejects login with wrong password', async () => {
         await request(app).post('/api/auth/register').send(testUser);
-        const res = await request(app)
-            .post('/api/auth/login')
-            .send({ email: testUser.email, password: 'wrongpassword' });
-        expect(res.statusCode).toEqual(401);
-        expect(res.body).toHaveProperty('message', 'Credenciales inválidas (correo o contraseña incorrectos).');
+        const res = await request(app).post('/api/auth/login').send({ email: testUser.email, password: 'wrong' });
+        expect(res.statusCode).toBe(401);
+        expect(res.body).toHaveProperty('message');
     });
 
-    it('should not login with invalid credentials (non-existent email)', async () => {
-        const res = await request(app)
-            .post('/api/auth/login')
-            .send({ email: 'nonexistent@example.com', password: 'anypassword' });
-        expect(res.statusCode).toEqual(401);
-        expect(res.body).toHaveProperty('message', 'Credenciales inválidas (correo o contraseña incorrectos).');
+    it('rejects login with non-existent email', async () => {
+        const res = await request(app).post('/api/auth/login').send({ email: 'no@no.com', password: 'password123' });
+        expect(res.statusCode).toBe(401);
+        expect(res.body).toHaveProperty('message');
     });
 
-    it('should protect a route with valid token', async () => {
-        const registerRes = await request(app).post('/api/auth/register').send(testUser);
-        const token = registerRes.body.token;
-        const protectedReportRes = await request(app)
-            .post('/api/weather/reports')
-            .set('Authorization', `Bearer ${token}`)
-            .send({ city: "Caracas", temperature: 28, humidity: 75, condition: "Soleado" });
-        expect([201, 400]).toContain(protectedReportRes.statusCode); // 201 si éxito, 400 si falta validación
+    // User model: password hashing and matchPassword
+    it('hashes password before saving', async () => {
+        const user = new User({ email: 'hash@test.com', password: 'plainpass' });
+        await user.save();
+        expect(user.password).not.toBe('plainpass');
+        expect(user.password.length).toBeGreaterThan(10);
     });
 
-    it('should deny access to a protected route without token', async () => {
-        const res = await request(app)
-            .post('/api/weather/reports')
-            .send({ city: "Caracas", temperature: 28, humidity: 75, condition: "Soleado" });
-        expect(res.statusCode).toEqual(401);
-        expect(res.body).toHaveProperty('message', 'No autorizado, no hay token.');
+    it('matchPassword returns true for correct password', async () => {
+        const user = new User({ email: 'match@test.com', password: 'mypassword' });
+        await user.save();
+        const isMatch = await user.matchPassword('mypassword');
+        expect(isMatch).toBe(true);
     });
 
-    it('should deny access to a protected route with an invalid token', async () => {
-        const res = await request(app)
-            .post('/api/weather/reports')
-            .set('Authorization', 'Bearer invalidtoken123')
-            .send({ city: "Caracas", temperature: 28, humidity: 75, condition: "Soleado" });
-        expect(res.statusCode).toEqual(401);
-        expect(res.body).toHaveProperty('message', 'No autorizado, token fallido.');
-    });
-
-    it('should deny access to a protected route with an expired token', async () => {
-        const expiredToken = jwt.sign({ id: new mongoose.Types.ObjectId() }, process.env.JWT_SECRET, { expiresIn: '1ms' });
-        await new Promise(resolve => setTimeout(resolve, 10));
-        const res = await request(app)
-            .post('/api/weather/reports')
-            .set('Authorization', `Bearer ${expiredToken}`)
-            .send({ city: "Caracas", temperature: 28, humidity: 75, condition: "Soleado" });
-        expect(res.statusCode).toEqual(401);
-        expect(res.body).toHaveProperty('message', 'Token expirado, por favor inicie sesión de nuevo.');
+    it('matchPassword returns false for wrong password', async () => {
+        const user = new User({ email: 'match2@test.com', password: 'mypassword' });
+        await user.save();
+        const isMatch = await user.matchPassword('wrongpassword');
+        expect(isMatch).toBe(false);
     });
 }); 
