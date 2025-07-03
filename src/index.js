@@ -65,6 +65,29 @@ const swaggerOptions = {
                         updatedAt: { type: 'string', format: 'date-time', example: '2023-11-20T12:00:00.000Z' }
                     }
                 },
+                WeatherReportUpdate: {
+                    type: 'object',
+                    properties: {
+                        city: { type: 'string', example: 'Caracas' },
+                        temperature: { type: 'number', format: 'float', example: 25.5 },
+                        humidity: { type: 'number', example: 70 },
+                        condition: { type: 'string', enum: ['Soleado', 'Nublado', 'Lluvioso', 'Tormenta'], example: 'Soleado' },
+                        date: { type: 'string', format: 'date-time', example: '2023-11-20T12:00:00Z' }
+                    }
+                },
+                PaginatedWeatherResponse: {
+                    type: 'object',
+                    properties: {
+                        data: {
+                            type: 'array',
+                            items: { $ref: '#/components/schemas/WeatherReport' }
+                        },
+                        totalCount: { type: 'integer', example: 50 },
+                        page: { type: 'integer', example: 1 },
+                        limit: { type: 'integer', example: 10 },
+                        totalPages: { type: 'integer', example: 5 }
+                    }
+                },
                 EarthquakeReport: {
                     type: 'object',
                     required: ['magnitude', 'depth', 'location', 'date'],
@@ -76,6 +99,94 @@ const swaggerOptions = {
                         date: { type: 'string', format: 'date-time', example: '2023-11-19T08:30:00Z' },
                         createdAt: { type: 'string', format: 'date-time', example: '2023-11-19T08:30:00.000Z' },
                         updatedAt: { type: 'string', format: 'date-time', example: '2023-11-19T08:30:00.000Z' }
+                    }
+                },
+                EarthquakeReportUpdate: {
+                    type: 'object',
+                    properties: {
+                        magnitude: { type: 'number', format: 'float', example: 5.8 },
+                        depth: { type: 'number', format: 'float', example: 35.2 },
+                        location: { type: 'string', example: 'Santiago, Chile' },
+                        date: { type: 'string', format: 'date-time', example: '2023-11-19T08:30:00Z' }
+                    }
+                },
+                PaginatedEarthquakeResponse: {
+                    type: 'object',
+                    properties: {
+                        data: {
+                            type: 'array',
+                            items: { $ref: '#/components/schemas/EarthquakeReport' }
+                        },
+                        totalCount: { type: 'integer', example: 50 },
+                        page: { type: 'integer', example: 1 },
+                        limit: { type: 'integer', example: 10 },
+                        totalPages: { type: 'integer', example: 5 }
+                    }
+                },
+                User: {
+                    type: 'object',
+                    properties: {
+                        _id: { type: 'string', example: '60d0fe4f5311236168a109cc' },
+                        email: { type: 'string', format: 'email', example: 'usuario@ejemplo.com' },
+                        createdAt: { type: 'string', format: 'date-time', example: '2023-11-20T12:00:00.000Z' },
+                        updatedAt: { type: 'string', format: 'date-time', example: '2023-11-20T12:00:00.000Z' }
+                    }
+                },
+                AuthResponse: {
+                    type: 'object',
+                    properties: {
+                        _id: { type: 'string', example: '60d0fe4f5311236168a109cc' },
+                        email: { type: 'string', format: 'email', example: 'usuario@ejemplo.com' },
+                        token: { type: 'string', example: 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9...' }
+                    }
+                },
+                ExternalWeatherData: {
+                    type: 'object',
+                    properties: {
+                        source: { type: 'string', example: 'OpenWeatherMap' },
+                        city: { type: 'string', example: 'London' },
+                        country: { type: 'string', example: 'GB' },
+                        temperature: { type: 'number', format: 'float', example: 15.2 },
+                        feelsLike: { type: 'number', format: 'float', example: 14.0 },
+                        minTemp: { type: 'number', format: 'float', example: 12.0 },
+                        maxTemp: { type: 'number', format: 'float', example: 18.0 },
+                        humidity: { type: 'number', example: 80 },
+                        pressure: { type: 'number', example: 1012 },
+                        windSpeed: { type: 'number', format: 'float', example: 4.1 },
+                        condition: { type: 'string', example: 'Clouds' },
+                        icon: { type: 'string', example: 'http://openweathermap.org/img/wn/02d.png' },
+                        timestamp: { type: 'string', format: 'date-time', example: '2023-11-20T12:00:00Z' }
+                    }
+                },
+                ExternalEarthquakeData: {
+                    type: 'object',
+                    properties: {
+                        source: { type: 'string', example: 'USGS' },
+                        id: { type: 'string', example: 'usgs-12345' },
+                        magnitude: { type: 'number', format: 'float', example: 6.2 },
+                        location: { type: 'string', example: '30km SW of Santiago, Chile' },
+                        time: { type: 'string', format: 'date-time', example: '2023-11-20T10:00:00Z' },
+                        tzOffset: { type: 'number', example: -240 },
+                        url: { type: 'string', example: 'https://earthquake.usgs.gov/earthquakes/eventpage/usgs-12345' },
+                        longitude: { type: 'number', example: -71.5 },
+                        latitude: { type: 'number', example: -33.5 },
+                        depth: { type: 'number', example: 50.0 }
+                    }
+                },
+                Error: {
+                    type: 'object',
+                    properties: {
+                        message: { type: 'string', example: 'Error description' },
+                        errors: {
+                            type: 'array',
+                            items: {
+                                type: 'object',
+                                properties: {
+                                    field: { type: 'string', example: 'email' },
+                                    message: { type: 'string', example: 'Invalid email format' }
+                                }
+                            }
+                        }
                     }
                 }
             }

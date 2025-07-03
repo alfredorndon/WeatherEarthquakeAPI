@@ -3,181 +3,356 @@ const router = express.Router();
 const earthquakeReportController = require('../controllers/earthquakeReportController');
 const earthquakeController = require('../controllers/earthquakeController');
 const { protect } = require('../middleware/authMiddleware');
-const { validateEarthquakeReport, validateEarthquakeReportUpdate } = require('../middleware/earthquakeValidation'); // Middleware de validación
+const { validateEarthquakeReport, validateEarthquakeReportUpdate } = require('../middleware/earthquakeValidation');
 
-// ======================================
-// Rutas para Reportes Sísmicos PERSONALIZADOS (CRUD - tu base de datos)
-// ======================================
 /**
  * @swagger
- * tags:
- *   name: Earthquake Reports
- *   description: Endpoints para gestionar reportes sísmicos personalizados (CRUD).
- * /api/earthquakes/reports:
+ * /earthquakes/reports:
  *   post:
- *     summary: Guarda un reporte sísmico personalizado.
+ *     summary: Crear un nuevo reporte sísmico personalizado
+ *     description: Crea un reporte sísmico personalizado asociado al usuario autenticado
  *     tags: [Earthquake Reports]
+ *     security:
+ *       - bearerAuth: []
  *     requestBody:
  *       required: true
  *       content:
  *         application/json:
  *           schema:
- *             type: object
- *             properties:
- *               magnitude: { type: number, format: float, example: 5.5 }
- *               depth: { type: number, format: float, example: 10.2 }
- *               location: { type: string, example: "Chile, Valparaíso" }
- *               date: { type: string, format: date-time, example: "2023-10-26T14:30:00Z" }
- *             required:
- *               - magnitude
- *               - depth
- *               - location
- *               - date
+ *             $ref: '#/components/schemas/EarthquakeReport'
  *     responses:
  *       201:
- *         description: Reporte creado exitosamente.
+ *         description: Reporte creado exitosamente
  *         content:
  *           application/json:
  *             schema:
  *               $ref: '#/components/schemas/EarthquakeReport'
  *       400:
- *         description: Datos de entrada inválidos.
+ *         description: Datos de entrada inválidos
+ *         content:
+ *           application/json:
+ *             schema:
+ *               $ref: '#/components/schemas/Error'
+ *       401:
+ *         description: No autorizado - Token requerido
+ *         content:
+ *           application/json:
+ *             schema:
+ *               $ref: '#/components/schemas/Error'
  */
 router.post('/reports', protect, validateEarthquakeReport, earthquakeReportController.createReport);
 
 /**
  * @swagger
- * /api/earthquakes/reports:
+ * /earthquakes/reports:
  *   get:
- *     summary: Retorna todos los reportes sísmicos personalizados.
+ *     summary: Obtener todos los reportes sísmicos del usuario
+ *     description: Obtiene una lista paginada de reportes sísmicos con opciones de filtrado y ordenamiento
  *     tags: [Earthquake Reports]
+ *     security:
+ *       - bearerAuth: []
+ *     parameters:
+ *       - in: query
+ *         name: page
+ *         schema:
+ *           type: integer
+ *           minimum: 1
+ *           default: 1
+ *         description: Número de página
+ *       - in: query
+ *         name: limit
+ *         schema:
+ *           type: integer
+ *           minimum: 1
+ *           maximum: 100
+ *           default: 10
+ *         description: Número de elementos por página
+ *       - in: query
+ *         name: location
+ *         schema:
+ *           type: string
+ *         description: Filtrar por ubicación
+ *       - in: query
+ *         name: minMagnitude
+ *         schema:
+ *           type: number
+ *         description: Magnitud mínima para filtrar
+ *       - in: query
+ *         name: maxMagnitude
+ *         schema:
+ *           type: number
+ *         description: Magnitud máxima para filtrar
+ *       - in: query
+ *         name: minDepth
+ *         schema:
+ *           type: number
+ *         description: Profundidad mínima para filtrar
+ *       - in: query
+ *         name: maxDepth
+ *         schema:
+ *           type: number
+ *         description: Profundidad máxima para filtrar
+ *       - in: query
+ *         name: sortBy
+ *         schema:
+ *           type: string
+ *           enum: [date, magnitude, depth, location, createdAt]
+ *           default: createdAt
+ *         description: Campo por el cual ordenar
+ *       - in: query
+ *         name: sortOrder
+ *         schema:
+ *           type: string
+ *           enum: [asc, desc]
+ *           default: desc
+ *         description: Orden de clasificación
  *     responses:
  *       200:
- *         description: Lista de reportes sísmicos.
+ *         description: Lista de reportes obtenida exitosamente
  *         content:
  *           application/json:
  *             schema:
- *               type: array
- *               items:
- *                 $ref: '#/components/schemas/EarthquakeReport'
- *       500:
- *         description: Error interno del servidor.
+ *               $ref: '#/components/schemas/PaginatedEarthquakeResponse'
+ *       401:
+ *         description: No autorizado - Token requerido
+ *         content:
+ *           application/json:
+ *             schema:
+ *               $ref: '#/components/schemas/Error'
  */
 router.get('/reports', protect, earthquakeReportController.getAllReports);
 
 /**
  * @swagger
- * /api/earthquakes/reports/history/{country}:
+ * /earthquakes/reports/history/{country}:
  *   get:
- *     summary: Retorna todos los sismos reportados en un país específico.
+ *     summary: Obtener historial de reportes por país
+ *     description: Obtiene el historial completo de reportes sísmicos para un país específico
  *     tags: [Earthquake Reports]
+ *     security:
+ *       - bearerAuth: []
  *     parameters:
  *       - in: path
  *         name: country
+ *         required: true
  *         schema:
  *           type: string
- *         required: true
- *         description: Nombre del país.
+ *         description: Nombre del país
  *     responses:
  *       200:
- *         description: Historial de sismos.
+ *         description: Historial obtenido exitosamente
  *         content:
  *           application/json:
  *             schema:
  *               type: array
  *               items:
  *                 $ref: '#/components/schemas/EarthquakeReport'
- *       500:
- *         description: Error interno del servidor.
+ *       401:
+ *         description: No autorizado - Token requerido
+ *         content:
+ *           application/json:
+ *             schema:
+ *               $ref: '#/components/schemas/Error'
+ *       404:
+ *         description: No se encontraron reportes para el país especificado
+ *         content:
+ *           application/json:
+ *             schema:
+ *               $ref: '#/components/schemas/Error'
  */
 router.get('/reports/history/:country', protect, earthquakeReportController.getHistoryByCountry);
-router.put('/reports/:id', protect, validateEarthquakeReportUpdate, earthquakeReportController.updateReport); // Nueva ruta para actualizar
-router.delete('/reports/:id', protect, earthquakeReportController.deleteReport);
 
-// ======================================
-// Rutas para Datos Sísmicos de APIs EXTERNAS (en tiempo real)
-// ======================================
 /**
  * @swagger
- * tags:
- *   name: External Earthquake Data
- *   description: Endpoints para obtener datos sísmicos en tiempo real de APIs externas.
- * /api/earthquakes:
+ * /earthquakes/reports/{id}:
+ *   put:
+ *     summary: Actualizar un reporte sísmico
+ *     description: Actualiza un reporte sísmico existente del usuario autenticado
+ *     tags: [Earthquake Reports]
+ *     security:
+ *       - bearerAuth: []
+ *     parameters:
+ *       - in: path
+ *         name: id
+ *         required: true
+ *         schema:
+ *           type: string
+ *         description: ID del reporte a actualizar
+ *     requestBody:
+ *       required: true
+ *       content:
+ *         application/json:
+ *           schema:
+ *             $ref: '#/components/schemas/EarthquakeReportUpdate'
+ *     responses:
+ *       200:
+ *         description: Reporte actualizado exitosamente
+ *         content:
+ *           application/json:
+ *             schema:
+ *               $ref: '#/components/schemas/EarthquakeReport'
+ *       400:
+ *         description: Datos de entrada inválidos
+ *         content:
+ *           application/json:
+ *             schema:
+ *               $ref: '#/components/schemas/Error'
+ *       401:
+ *         description: No autorizado - Token requerido
+ *         content:
+ *           application/json:
+ *             schema:
+ *               $ref: '#/components/schemas/Error'
+ *       404:
+ *         description: Reporte no encontrado
+ *         content:
+ *           application/json:
+ *             schema:
+ *               $ref: '#/components/schemas/Error'
+ *       403:
+ *         description: No autorizado - El reporte no pertenece al usuario
+ *         content:
+ *           application/json:
+ *             schema:
+ *               $ref: '#/components/schemas/Error'
+ */
+router.put('/reports/:id', protect, validateEarthquakeReportUpdate, earthquakeReportController.updateReport);
+
+/**
+ * @swagger
+ * /earthquakes/reports/{id}:
+ *   delete:
+ *     summary: Eliminar un reporte sísmico
+ *     description: Elimina un reporte sísmico del usuario autenticado
+ *     tags: [Earthquake Reports]
+ *     security:
+ *       - bearerAuth: []
+ *     parameters:
+ *       - in: path
+ *         name: id
+ *         required: true
+ *         schema:
+ *           type: string
+ *         description: ID del reporte a eliminar
+ *     responses:
+ *       200:
+ *         description: Reporte eliminado exitosamente
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: object
+ *               properties:
+ *                 message:
+ *                   type: string
+ *                   example: "Reporte eliminado exitosamente"
+ *       401:
+ *         description: No autorizado - Token requerido
+ *         content:
+ *           application/json:
+ *             schema:
+ *               $ref: '#/components/schemas/Error'
+ *       404:
+ *         description: Reporte no encontrado
+ *         content:
+ *           application/json:
+ *             schema:
+ *               $ref: '#/components/schemas/Error'
+ *       403:
+ *         description: No autorizado - El reporte no pertenece al usuario
+ *         content:
+ *           application/json:
+ *             schema:
+ *               $ref: '#/components/schemas/Error'
+ */
+router.delete('/reports/:id', protect, earthquakeReportController.deleteReport);
+
+/**
+ * @swagger
+ * /earthquakes:
  *   get:
- *     summary: Obtiene datos sísmicos en tiempo real de una API externa.
+ *     summary: Obtener datos sísmicos en tiempo real
+ *     description: Obtiene datos sísmicos en tiempo real de APIs externas (USGS)
  *     tags: [External Earthquake Data]
  *     parameters:
  *       - in: query
  *         name: source
  *         schema:
  *           type: string
- *           enum: [usgs, emsc]
+ *           enum: [usgs]
  *         required: true
- *         description: Fuente de la API (usgs o emsc).
+ *         description: Fuente de la API (actualmente solo usgs)
  *       - in: query
  *         name: country
  *         schema:
  *           type: string
  *         required: false
- *         description: Nombre del país para filtrar los sismos.
- *         # Nota: USGS no filtra directamente por país, se filtra post-request
+ *         description: Nombre del país para filtrar los sismos
  *       - in: query
  *         name: minmagnitude
  *         schema:
  *           type: number
  *           format: float
  *         required: false
- *         description: Magnitud mínima del sismo.
+ *         description: Magnitud mínima del sismo
  *       - in: query
  *         name: limit
  *         schema:
  *           type: integer
  *         required: false
- *         description: Número máximo de resultados.
+ *         description: Número máximo de resultados
  *       - in: query
  *         name: starttime
  *         schema:
  *           type: string
  *           format: date
  *         required: false
- *         description: Fecha de inicio para la búsqueda (YYYY-MM-DD).
+ *         description: Fecha de inicio para la búsqueda (YYYY-MM-DD)
  *       - in: query
  *         name: endtime
  *         schema:
  *           type: string
  *           format: date
  *         required: false
- *         description: Fecha de fin para la búsqueda (YYYY-MM-DD).
+ *         description: Fecha de fin para la búsqueda (YYYY-MM-DD)
  *     responses:
  *       200:
- *         description: Datos sísmicos obtenidos exitosamente.
+ *         description: Datos sísmicos obtenidos exitosamente
  *         content:
  *           application/json:
  *             schema:
  *               type: array
  *               items:
- *                 type: object
- *                 properties:
- *                   source: { type: string, example: "USGS" }
- *                   id: { type: string, example: "usgs-12345" }
- *                   magnitude: { type: number, format: float, example: 6.2 }
- *                   location: { type: string, example: "30km SW of Santiago, Chile" }
- *                   time: { type: string, format: "date-time", example: "2023-11-20T10:00:00Z" }
- *                   tzOffset: { type: number, example: -240 }
- *                   url: { type: string, example: "https://earthquake.usgs.gov/earthquakes/eventpage/usgs-12345" }
- *                   longitude: { type: number, example: -71.5 }
- *                   latitude: { type: number, example: -33.5 }
- *                   depth: { type: number, example: 50.0 }
+ *                 $ref: '#/components/schemas/ExternalEarthquakeData'
  *       400:
- *         description: Parámetros inválidos o faltantes.
+ *         description: Parámetros inválidos o faltantes
+ *         content:
+ *           application/json:
+ *             schema:
+ *               $ref: '#/components/schemas/Error'
  *       500:
- *         description: Error interno del servidor.
+ *         description: Error interno del servidor
+ *         content:
+ *           application/json:
+ *             schema:
+ *               $ref: '#/components/schemas/Error'
  *       501:
- *         description: La fuente de la API no está implementada.
+ *         description: La fuente de la API no está implementada
+ *         content:
+ *           application/json:
+ *             schema:
+ *               $ref: '#/components/schemas/Error'
  *       502:
- *         description: Error de la API externa (Bad Gateway).
+ *         description: Error de la API externa (Bad Gateway)
+ *         content:
+ *           application/json:
+ *             schema:
+ *               $ref: '#/components/schemas/Error'
  *       504:
- *         description: Tiempo de espera excedido o sin respuesta de la API externa (Gateway Timeout).
+ *         description: Tiempo de espera excedido o sin respuesta de la API externa (Gateway Timeout)
+ *         content:
+ *           application/json:
+ *             schema:
+ *               $ref: '#/components/schemas/Error'
  */
 router.get('/', earthquakeController.getEarthquakeData);
 

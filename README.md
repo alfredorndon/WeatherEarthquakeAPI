@@ -5,22 +5,57 @@ API RESTful para centralizar datos meteorológicos y sismológicos, permitiendo 
 
 ## Estructura de Carpetas
 ```
-WeatherEarthquakeAPI/
+WeatherEarthquakeAPI1/
   ├── src/
-  │   ├── config/         # Configuración de la base de datos y variables de entorno
-  │   ├── models/         # Modelos de Mongoose
-  │   ├── routes/         # Rutas de la API (incluye endpoints CRUD y externos)
-  │   ├── controllers/    # Lógica de manejo de solicitudes HTTP
-  │   ├── services/       # Lógica de negocio y consumo de APIs externas
-  │   ├── middleware/     # Middlewares de validación, etc.
-  │   ├── utils/          # Funciones de utilidad
-  │   └── index.js        # Archivo principal de Express
+  │   ├── config/           # Configuración de la base de datos y logger
+  │   │   ├── db.js
+  │   │   └── logger.js
+  │   ├── controllers/      # Lógica de manejo de solicitudes HTTP
+  │   │   ├── authController.js
+  │   │   ├── earthquakeController.js
+  │   │   ├── earthquakeReportController.js
+  │   │   ├── weatherController.js
+  │   │   └── weatherReportController.js
+  │   ├── middleware/       # Middlewares de autenticación y validación
+  │   │   ├── authMiddleware.js
+  │   │   ├── earthquakeValidation.js
+  │   │   └── weatherValidation.js
+  │   ├── models/           # Modelos de Mongoose
+  │   │   ├── EarthquakeReport.js
+  │   │   ├── User.js
+  │   │   └── WeatherReport.js
+  │   ├── routes/           # Rutas de la API (endpoints CRUD y externos)
+  │   │   ├── authRoutes.js
+  │   │   ├── earthquakeRoutes.js
+  │   │   └── weatherRoutes.js
+  │   ├── services/         # Lógica de negocio y consumo de APIs externas
+  │   │   ├── axiosErrorHandler.js
+  │   │   ├── earthquakeReportService.js
+  │   │   ├── openWeatherMapService.js
+  │   │   ├── usgsService.js
+  │   │   ├── weatherApiService.js
+  │   │   └── weatherReportService.js
+  │   ├── utils/            # Funciones de utilidad (vacío actualmente)
+  │   └── index.js          # Archivo principal de Express
   ├── tests/
-  │   ├── unit/           # Pruebas unitarias
-  │   └── integration/    # Pruebas de integración
+  │   ├── auth.test.js      # Prueba de autenticación
+  │   ├── unit/             # Pruebas unitarias de servicios
+  │   │   ├── earthquakeReportService.test.js
+  │   │   └── weatherReportService.test.js
+  │   └── integration/      # Pruebas de integración de endpoints
+  │       ├── earthquakeReports.test.js
+  │       ├── externalEarthquake.test.js
+  │       ├── externalWeather.test.js
+  │       └── weatherReports.test.js
+  ├── logs/                 # Archivos de logs generados por Winston
+  │   ├── combined.log
+  │   ├── error.log
+  │   ├── exceptions.log
+  │   └── rejections.log
   ├── package.json
   ├── package-lock.json
-  └── README.md
+  ├── README.md
+  └── test-mongo.js         # Script de prueba de conexión a MongoDB
 ```
 
 ## Endpoints Principales
