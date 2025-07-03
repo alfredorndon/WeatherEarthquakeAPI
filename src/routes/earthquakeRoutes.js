@@ -3,7 +3,7 @@ const router = express.Router();
 const earthquakeReportController = require('../controllers/earthquakeReportController');
 const earthquakeController = require('../controllers/earthquakeController');
 const { protect } = require('../middleware/authMiddleware');
-// const { validateEarthquakeReport } = require('../middleware/earthquakeValidation'); // Si tienes un middleware de validación para reportes
+const { validateEarthquakeReport, validateEarthquakeReportUpdate } = require('../middleware/earthquakeValidation'); // Middleware de validación
 
 // ======================================
 // Rutas para Reportes Sísmicos PERSONALIZADOS (CRUD - tu base de datos)
@@ -43,7 +43,7 @@ const { protect } = require('../middleware/authMiddleware');
  *       400:
  *         description: Datos de entrada inválidos.
  */
-router.post('/reports', protect, /* validateEarthquakeReport, */ earthquakeReportController.createReport);
+router.post('/reports', protect, validateEarthquakeReport, earthquakeReportController.createReport);
 
 /**
  * @swagger
@@ -91,28 +91,7 @@ router.get('/reports', protect, earthquakeReportController.getAllReports);
  *         description: Error interno del servidor.
  */
 router.get('/reports/history/:country', protect, earthquakeReportController.getHistoryByCountry);
-
-/**
- * @swagger
- * /api/earthquakes/reports/{id}:
- *   delete:
- *     summary: Elimina un registro sísmico personalizado por ID.
- *     tags: [Earthquake Reports]
- *     parameters:
- *       - in: path
- *         name: id
- *         schema:
- *           type: string
- *         required: true
- *         description: ID del reporte sísmico.
- *     responses:
- *       200:
- *         description: Reporte eliminado exitosamente.
- *       404:
- *         description: Reporte no encontrado.
- *       500:
- *         description: Error interno del servidor.
- */
+router.put('/reports/:id', protect, validateEarthquakeReportUpdate, earthquakeReportController.updateReport); // Nueva ruta para actualizar
 router.delete('/reports/:id', protect, earthquakeReportController.deleteReport);
 
 // ======================================

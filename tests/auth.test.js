@@ -6,7 +6,7 @@ const jwt = require('jsonwebtoken');
 
 describe('Auth Integration & User Model', () => {
     beforeAll(async () => {
-        const mongoUri = process.env.MONGO_URI_TEST || 'mongodb://localhost:27017/test_db_weather_earthquake_api';
+        const mongoUri = process.env.MONGO_URI_TEST || 'mongodb://localhost:27017/weather_earthquake_test';
         await mongoose.connect(mongoUri);
     }, 30000);
 

@@ -7,6 +7,8 @@ const swaggerUi = require('swagger-ui-express');
 const swaggerJsdoc = require('swagger-jsdoc');
 const authRoutes = require('./routes/authRoutes');
 const { protect } = require('./middleware/authMiddleware');
+const logger = require('./config/logger'); // Importa el logger
+const morgan = require('morgan'); // Para logs de solicitudes HTTP
 
 const app = express();
 
@@ -17,6 +19,10 @@ if (process.env.NODE_ENV !== 'test') {
 
 // Middleware para parsear JSON en las solicitudes
 app.use(express.json());
+
+// Middleware de logging con Morgan
+// Usa 'combined' para formato detallado o 'dev' para desarrollo
+app.use(morgan('combined', { stream: { write: message => logger.info(message.trim()) } }));
 
 const swaggerOptions = {
     definition: {
@@ -94,14 +100,27 @@ app.use((req, res, next) => {
 });
 
 app.use((err, req, res, next) => {
-    console.error(err.stack);
+    logger.error('Unhandled application error', {
+        message: err.message,
+        stack: err.stack,
+        url: req.originalUrl,
+        method: req.method,
+        ip: req.ip,
+        user: req.user ? req.user.email : 'N/A' // Si tienes el user en req
+    });
+
+    // ... (Tu lógica de respuesta de error existente)
+    if (err.name === 'ValidationError') {
+        const messages = Object.values(err.errors).map(val => val.message);
+        return res.status(400).json({ message: messages.join(', ') });
+    }
     res.status(500).json({ message: 'Algo salió mal en el servidor!', error: err.message });
 });
 
 // Solo iniciar el servidor si no estamos en modo test
 if (process.env.NODE_ENV !== 'test') {
     const PORT = process.env.PORT || 5000;
-    app.listen(PORT, () => console.log(`Server running on port ${PORT}`));
+    app.listen(PORT, () => logger.info(`Server running on port ${PORT}`));
 }
 
 module.exports = app;

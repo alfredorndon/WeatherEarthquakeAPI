@@ -12,4 +12,17 @@ exports.validateEarthquakeReport = [
     }
     next();
   }
+];
+
+exports.validateEarthquakeReportUpdate = [
+  body('magnitude').optional().isNumeric().withMessage('Magnitude must be a number'),
+  body('depth').optional().isNumeric().withMessage('Depth must be a number'),
+  body('location').optional().isString().notEmpty().withMessage('Location must be a non-empty string'),
+  (req, res, next) => {
+    const errors = validationResult(req);
+    if (!errors.isEmpty()) {
+      return res.status(400).json({ errors: errors.array() });
+    }
+    next();
+  }
 ]; 
