@@ -3,7 +3,7 @@ const handleAxiosError = require('./axiosErrorHandler');
 require('dotenv').config();
 
 const API_KEY = process.env.WEATHERAPI_API_KEY;
-const BASE_URL = 'http://api.weatherapi.com/v1';
+const BASE_URL = 'https://api.weatherapi.com/v1';
 
 
 exports.getWeatherDataByCity = async (city) => {

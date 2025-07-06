@@ -25,7 +25,7 @@ describe('GET /api/earthquakes - USGS Integration', () => {
                         place: "50km NW of Lima, Peru",
                         time: 1678886400000,
                         tz: -300,
-                        url: "http://example.com/usgs-123"
+                        url: "https://example.com/usgs-123"
                     },
                     geometry: {
                         type: "Point",
@@ -55,7 +55,7 @@ describe('GET /api/earthquakes - USGS Integration', () => {
                         place: "10km SW of Santiago, Chile",
                         time: 1678886400000,
                         tz: -240,
-                        url: "http://example.com/usgs-1"
+                        url: "https://example.com/usgs-1"
                     },
                     geometry: {
                         type: "Point",
@@ -69,7 +69,7 @@ describe('GET /api/earthquakes - USGS Integration', () => {
                         place: "20km E of Quito, Ecuador",
                         time: 1678886400000,
                         tz: -300,
-                        url: "http://example.com/usgs-2"
+                        url: "https://example.com/usgs-2"
                     },
                     geometry: {
                         type: "Point",

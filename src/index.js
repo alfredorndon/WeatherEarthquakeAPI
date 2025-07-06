@@ -1,4 +1,6 @@
 require('dotenv').config();
+const https = require('https');
+const fs = require('fs');
 // console.log("aaaaa");
 // console.log('TEST ENV:', process.env.WEATHERAPI_KEY);
 const express = require('express');
@@ -40,7 +42,7 @@ const swaggerOptions = {
         },
         servers: [
             {
-                url: `http://localhost:${process.env.PORT || 5000}/api`,
+                url: `https://localhost:${process.env.PORT || 5001}/api`,
                 description: 'Servidor de Desarrollo Local'
             }
         ],
@@ -156,7 +158,7 @@ const swaggerOptions = {
                         pressure: { type: 'number', example: 1012 },
                         windSpeed: { type: 'number', format: 'float', example: 4.1 },
                         condition: { type: 'string', example: 'Clouds' },
-                        icon: { type: 'string', example: 'http://openweathermap.org/img/wn/02d.png' },
+                        icon: { type: 'string', example: 'https://openweathermap.org/img/wn/02d.png' },
                         timestamp: { type: 'string', format: 'date-time', example: '2023-11-20T12:00:00Z' }
                     }
                 },
@@ -232,8 +234,13 @@ app.use((err, req, res, next) => {
 
 // Solo iniciar el servidor si no estamos en modo test
 if (process.env.NODE_ENV !== 'test') {
-    const PORT = process.env.PORT || 5000;
-    app.listen(PORT, () => logger.info(`Server running on port ${PORT}`));
+    const PORT = process.env.PORT || 5001;
+    const privateKey = fs.readFileSync('key.pem', 'utf8');
+    const certificate = fs.readFileSync('cert.pem', 'utf8');
+    const credentials = { key: privateKey, cert: certificate };
+
+    const httpsServer = https.createServer(credentials, app);
+    httpsServer.listen(PORT, () => logger.info(`Server running on port ${PORT}`));
 }
 
 module.exports = app;
