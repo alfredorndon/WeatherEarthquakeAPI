@@ -27,7 +27,7 @@ exports.getWeatherDataByCity = async (city) => {
             pressure: data.main.pressure,
             windSpeed: data.wind.speed,
             condition: data.weather[0].description,
-            icon: `http://openweathermap.org/img/wn/${data.weather[0].icon}.png`,
+            icon: `https://openweathermap.org/img/wn/${data.weather[0].icon}.png`,
             timestamp: new Date(data.dt * 1000)
         };
     } catch (error) {

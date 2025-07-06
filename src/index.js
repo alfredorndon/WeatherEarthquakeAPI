@@ -156,7 +156,7 @@ const swaggerOptions = {
                         pressure: { type: 'number', example: 1012 },
                         windSpeed: { type: 'number', format: 'float', example: 4.1 },
                         condition: { type: 'string', example: 'Clouds' },
-                        icon: { type: 'string', example: 'http://openweathermap.org/img/wn/02d.png' },
+                        icon: { type: 'string', example: 'https://openweathermap.org/img/wn/02d.png' },
                         timestamp: { type: 'string', format: 'date-time', example: '2023-11-20T12:00:00Z' }
                     }
                 },

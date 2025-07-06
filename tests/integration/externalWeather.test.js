@@ -44,7 +44,7 @@ describe('GET /api/weather - External Weather Data', () => {
             location: { name: 'Paris', country: 'France' },
             current: { temp_c: 18.2, feelslike_c: 17.0, humidity: 60, pressure_mb: 1015, wind_kph: 15.0, condition: { text: 'Partly cloudy', icon: '//cdn.weatherapi.com/weather/64x64/day/116.png' }, last_updated_epoch: 1678886400 }
         };
-        mockAxios.onGet('http://api.weatherapi.com/v1/current.json').reply(200, mockWeatherApiData);
+        mockAxios.onGet('https://api.weatherapi.com/v1/current.json').reply(200, mockWeatherApiData);
         const res = await request(app).get('/api/weather?source=weatherapi&city=Paris');
         expect(res.statusCode).toEqual(200);
         expect(res.body).toHaveProperty('source', 'WeatherAPI');
@@ -102,7 +102,7 @@ describe('GET /api/earthquakes - External Earthquake Data', () => {
                         place: "10km SW of Santiago, Chile",
                         time: 1678886400000,
                         tz: -240,
-                        url: "http://example.com/usgs-123"
+                        url: "https://example.com/usgs-123"
                     },
                     geometry: {
                         type: "Point",

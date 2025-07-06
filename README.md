@@ -65,7 +65,7 @@ WeatherEarthquakeAPI1/
 - `/api/earthquakes` (Consulta de datos sísmicos en tiempo real de USGS)
 
 ## Documentación Swagger
-La documentación interactiva está disponible en: [http://localhost:5000/api-docs](http://localhost:5000/api-docs)
+La documentación interactiva está disponible en: [https://localhost:5000/api-docs](https://localhost:5000/api-docs)
 
 ## Variables de Entorno
 Crea un archivo `.env` con las siguientes variables:
