@@ -1,0 +1,256 @@
+2025-07-02 19:48:51 info: Server running on port 5000
+2025-07-02 19:48:51 info: ::ffff:127.0.0.1 - - [02/Jul/2025:23:48:51 +0000] "GET / HTTP/1.1" 200 34 "-" "Mozilla/5.0 (Windows NT; Windows NT 10.0; en-US) WindowsPowerShell/5.1.26100.4202"
+2025-07-02 19:49:05 info: Cache MISS for key: weather_openweathermap_london
+2025-07-02 19:49:05 info: Cache SET for key: weather_openweathermap_london with TTL: 900s
+2025-07-02 19:49:05 info: Weather data successfully fetched and cached for key: weather_openweathermap_london
+2025-07-02 19:49:05 info: ::ffff:127.0.0.1 - - [02/Jul/2025:23:49:05 +0000] "GET /api/weather?source=openweathermap&city=London HTTP/1.1" 200 276 "-" "-"
+2025-07-02 19:49:05 info: Cache MISS for key: weather_openweathermap_nonexistentcity
+2025-07-02 19:49:05 error: Error in weatherController for openweathermap and NonExistentCity: {"error":"OpenWeatherMap API error: 404 - city not found","query":{"source":"openweathermap","city":"NonExistentCity"}}
+2025-07-02 19:49:05 info: ::ffff:127.0.0.1 - - [02/Jul/2025:23:49:05 +0000] "GET /api/weather?source=openweathermap&city=NonExistentCity HTTP/1.1" 404 61 "-" "-"
+2025-07-02 19:49:06 info: Cache MISS for key: weather_weatherapi_paris
+2025-07-02 19:49:06 info: Cache SET for key: weather_weatherapi_paris with TTL: 900s
+2025-07-02 19:49:06 info: Weather data successfully fetched and cached for key: weather_weatherapi_paris
+2025-07-02 19:49:06 info: ::ffff:127.0.0.1 - - [02/Jul/2025:23:49:06 +0000] "GET /api/weather?source=weatherapi&city=Paris HTTP/1.1" 200 259 "-" "-"
+2025-07-02 19:49:06 warn: Missing source or city in weather data request {"query":{"city":"London"}}
+2025-07-02 19:49:06 info: ::ffff:127.0.0.1 - - [02/Jul/2025:23:49:06 +0000] "GET /api/weather?city=London HTTP/1.1" 400 57 "-" "-"
+2025-07-02 19:49:06 warn: Missing source or city in weather data request {"query":{"source":"openweathermap"}}
+2025-07-02 19:49:06 info: ::ffff:127.0.0.1 - - [02/Jul/2025:23:49:06 +0000] "GET /api/weather?source=openweathermap HTTP/1.1" 400 57 "-" "-"
+2025-07-02 19:49:06 info: Cache HIT for key: weather_openweathermap_london
+2025-07-02 19:49:06 info: Serving weather data from cache for key: weather_openweathermap_london
+2025-07-02 19:49:06 info: ::ffff:127.0.0.1 - - [02/Jul/2025:23:49:06 +0000] "GET /api/weather?source=openweathermap&city=London HTTP/1.1" 200 276 "-" "-"
+2025-07-02 19:49:06 info: Cache HIT for key: weather_openweathermap_london
+2025-07-02 19:49:06 info: Serving weather data from cache for key: weather_openweathermap_london
+2025-07-02 19:49:06 info: ::ffff:127.0.0.1 - - [02/Jul/2025:23:49:06 +0000] "GET /api/weather?source=openweathermap&city=London HTTP/1.1" 200 276 "-" "-"
+2025-07-02 19:49:06 info: Cache MISS for key: earthquake_usgs_{"source":"usgs","minmagnitude":"5","country":"chile"}
+2025-07-02 19:49:06 info: Filtering USGS data by country: Chile
+2025-07-02 19:49:06 info: Cache SET for key: earthquake_usgs_{"source":"usgs","minmagnitude":"5","country":"chile"} with TTL: 300s
+2025-07-02 19:49:06 info: Earthquake data successfully fetched and cached for key: earthquake_usgs_{"source":"usgs","minmagnitude":"5","country":"chile"}
+2025-07-02 19:49:06 info: ::ffff:127.0.0.1 - - [02/Jul/2025:23:49:06 +0000] "GET /api/earthquakes?source=usgs&minmagnitude=5&country=Chile HTTP/1.1" 200 223 "-" "-"
+2025-07-02 19:49:06 warn: Missing source in earthquake data request {"query":{"minmagnitude":"5"}}
+2025-07-02 19:49:06 info: ::ffff:127.0.0.1 - - [02/Jul/2025:23:49:06 +0000] "GET /api/earthquakes?minmagnitude=5 HTTP/1.1" 400 65 "-" "-"
+2025-07-02 19:49:06 info: Cache MISS for key: earthquake_usgs_{"source":"usgs","minmagnitude":"notanumber"}
+2025-07-02 19:49:06 error: Error in earthquakeController for usgs: {"error":"USGS API error: 404 - undefined","query":{"source":"usgs","minmagnitude":"notanumber"}}
+2025-07-02 19:49:06 info: ::ffff:127.0.0.1 - - [02/Jul/2025:23:49:06 +0000] "GET /api/earthquakes?source=usgs&minmagnitude=notanumber HTTP/1.1" 502 77 "-" "-"
+2025-07-02 19:49:06 warn: Missing source or city in weather data request {"query":{"source":"openweathermap","city":""}}
+2025-07-02 19:49:06 info: ::ffff:127.0.0.1 - - [02/Jul/2025:23:49:06 +0000] "GET /api/weather?source=openweathermap&city= HTTP/1.1" 400 57 "-" "-"
+2025-07-02 19:49:08 info: Cache MISS for key: earthquake_usgs_{"source":"usgs","minmagnitude":"6","country":"peru"}
+2025-07-02 19:49:08 info: Filtering USGS data by country: Peru
+2025-07-02 19:49:08 info: Cache SET for key: earthquake_usgs_{"source":"usgs","minmagnitude":"6","country":"peru"} with TTL: 300s
+2025-07-02 19:49:08 info: Earthquake data successfully fetched and cached for key: earthquake_usgs_{"source":"usgs","minmagnitude":"6","country":"peru"}
+2025-07-02 19:49:08 info: ::ffff:127.0.0.1 - - [02/Jul/2025:23:49:08 +0000] "GET /api/earthquakes?source=usgs&minmagnitude=6&country=Peru HTTP/1.1" 200 218 "-" "-"
+2025-07-02 19:49:08 info: Cache MISS for key: earthquake_usgs_{"source":"usgs","country":"chile"}
+2025-07-02 19:49:08 info: Filtering USGS data by country: Chile
+2025-07-02 19:49:08 info: Cache SET for key: earthquake_usgs_{"source":"usgs","country":"chile"} with TTL: 300s
+2025-07-02 19:49:08 info: Earthquake data successfully fetched and cached for key: earthquake_usgs_{"source":"usgs","country":"chile"}
+2025-07-02 19:49:08 info: ::ffff:127.0.0.1 - - [02/Jul/2025:23:49:08 +0000] "GET /api/earthquakes?source=usgs&country=Chile HTTP/1.1" 200 217 "-" "-"
+2025-07-02 19:49:08 warn: Missing source in earthquake data request {"query":{"minmagnitude":"5"}}
+2025-07-02 19:49:08 info: ::ffff:127.0.0.1 - - [02/Jul/2025:23:49:08 +0000] "GET /api/earthquakes?minmagnitude=5 HTTP/1.1" 400 65 "-" "-"
+2025-07-02 19:49:08 info: Cache MISS for key: earthquake_usgs_{"source":"usgs"}
+2025-07-02 19:49:08 error: Error in earthquakeController for usgs: {"error":"USGS API error: 500 - Internal Server Error","query":{"source":"usgs"}}
+2025-07-02 19:49:08 info: ::ffff:127.0.0.1 - - [02/Jul/2025:23:49:08 +0000] "GET /api/earthquakes?source=usgs HTTP/1.1" 502 89 "-" "-"
+2025-07-02 19:49:08 info: Cache MISS for key: earthquake_usgs_{"source":"usgs"}
+2025-07-02 19:49:08 error: Error in earthquakeController for usgs: {"error":"No response from USGS","query":{"source":"usgs"}}
+2025-07-02 19:49:08 info: ::ffff:127.0.0.1 - - [02/Jul/2025:23:49:08 +0000] "GET /api/earthquakes?source=usgs HTTP/1.1" 504 81 "-" "-"
+2025-07-02 19:49:20 error: Error creating earthquake report {"error":"Operation `earthquakereports.insertOne()` buffering timed out after 10000ms","body":{"magnitude":5.2,"depth":10,"location":"Los Andes","date":"2025-07-02T23:49:10.468Z"},"user":"N/A"}
+2025-07-02 19:49:20 info: ::ffff:127.0.0.1 - - [02/Jul/2025:23:49:20 +0000] "POST /api/earthquakes/reports HTTP/1.1" 500 156 "-" "-"
+2025-07-02 19:49:31 error: Error fetching all earthquake reports {"error":"Operation `earthquakereports.countDocuments()` buffering timed out after 10000ms","query":{},"user":"N/A"}
+2025-07-02 19:49:31 info: ::ffff:127.0.0.1 - - [02/Jul/2025:23:49:31 +0000] "GET /api/earthquakes/reports HTTP/1.1" 500 166 "-" "-"
+2025-07-02 19:49:41 error: Error creating weather report {"error":"Operation `weatherreports.insertOne()` buffering timed out after 10000ms","body":{"city":"Caracas","temperature":25,"humidity":70,"condition":"Soleado"},"user":"N/A"}
+2025-07-02 19:49:41 info: ::ffff:127.0.0.1 - - [02/Jul/2025:23:49:41 +0000] "POST /api/weather/reports HTTP/1.1" 500 155 "-" "-"
+2025-07-02 19:49:52 error: Error fetching all weather reports {"error":"Operation `weatherreports.countDocuments()` buffering timed out after 10000ms","query":{},"user":"N/A"}
+2025-07-02 19:49:52 info: ::ffff:127.0.0.1 - - [02/Jul/2025:23:49:52 +0000] "GET /api/weather/reports HTTP/1.1" 500 165 "-" "-"
+2025-07-02 19:52:34 error: Error creating earthquake report {"error":"Operation `earthquakereports.insertOne()` buffering timed out after 10000ms","body":{"magnitude":5.2,"depth":10,"location":"Los Andes","date":"2025-07-02T23:52:24.390Z"},"user":"N/A"}
+2025-07-02 19:52:34 info: ::ffff:127.0.0.1 - - [02/Jul/2025:23:52:34 +0000] "POST /api/earthquakes/reports HTTP/1.1" 500 156 "-" "-"
+2025-07-02 19:52:45 error: Error fetching all earthquake reports {"error":"Operation `earthquakereports.countDocuments()` buffering timed out after 10000ms","query":{},"user":"N/A"}
+2025-07-02 19:52:45 info: ::ffff:127.0.0.1 - - [02/Jul/2025:23:52:45 +0000] "GET /api/earthquakes/reports HTTP/1.1" 500 166 "-" "-"
+2025-07-02 19:52:55 error: Error creating weather report {"error":"Operation `weatherreports.insertOne()` buffering timed out after 10000ms","body":{"city":"Caracas","temperature":25,"humidity":70,"condition":"Soleado"},"user":"N/A"}
+2025-07-02 19:52:55 info: ::ffff:127.0.0.1 - - [02/Jul/2025:23:52:55 +0000] "POST /api/weather/reports HTTP/1.1" 500 155 "-" "-"
+2025-07-02 19:53:06 error: Error fetching all weather reports {"error":"Operation `weatherreports.countDocuments()` buffering timed out after 10000ms","query":{},"user":"N/A"}
+2025-07-02 19:53:06 info: ::ffff:127.0.0.1 - - [02/Jul/2025:23:53:06 +0000] "GET /api/weather/reports HTTP/1.1" 500 165 "-" "-"
+2025-07-02 19:53:07 info: Cache MISS for key: weather_openweathermap_london
+2025-07-02 19:53:07 info: Cache SET for key: weather_openweathermap_london with TTL: 900s
+2025-07-02 19:53:07 info: Weather data successfully fetched and cached for key: weather_openweathermap_london
+2025-07-02 19:53:07 info: ::ffff:127.0.0.1 - - [02/Jul/2025:23:53:07 +0000] "GET /api/weather?source=openweathermap&city=London HTTP/1.1" 200 276 "-" "-"
+2025-07-02 19:53:07 info: Cache MISS for key: weather_openweathermap_nonexistentcity
+2025-07-02 19:53:08 error: Error in weatherController for openweathermap and NonExistentCity: {"error":"OpenWeatherMap API error: 404 - city not found","query":{"source":"openweathermap","city":"NonExistentCity"}}
+2025-07-02 19:53:08 info: ::ffff:127.0.0.1 - - [02/Jul/2025:23:53:08 +0000] "GET /api/weather?source=openweathermap&city=NonExistentCity HTTP/1.1" 404 61 "-" "-"
+2025-07-02 19:53:08 info: Cache MISS for key: weather_weatherapi_paris
+2025-07-02 19:53:08 info: Cache SET for key: weather_weatherapi_paris with TTL: 900s
+2025-07-02 19:53:08 info: Weather data successfully fetched and cached for key: weather_weatherapi_paris
+2025-07-02 19:53:08 info: ::ffff:127.0.0.1 - - [02/Jul/2025:23:53:08 +0000] "GET /api/weather?source=weatherapi&city=Paris HTTP/1.1" 200 259 "-" "-"
+2025-07-02 19:53:08 warn: Missing source or city in weather data request {"query":{"city":"London"}}
+2025-07-02 19:53:08 info: ::ffff:127.0.0.1 - - [02/Jul/2025:23:53:08 +0000] "GET /api/weather?city=London HTTP/1.1" 400 57 "-" "-"
+2025-07-02 19:53:08 warn: Missing source or city in weather data request {"query":{"source":"openweathermap"}}
+2025-07-02 19:53:08 info: ::ffff:127.0.0.1 - - [02/Jul/2025:23:53:08 +0000] "GET /api/weather?source=openweathermap HTTP/1.1" 400 57 "-" "-"
+2025-07-02 19:53:08 info: Cache HIT for key: weather_openweathermap_london
+2025-07-02 19:53:08 info: Serving weather data from cache for key: weather_openweathermap_london
+2025-07-02 19:53:08 info: ::ffff:127.0.0.1 - - [02/Jul/2025:23:53:08 +0000] "GET /api/weather?source=openweathermap&city=London HTTP/1.1" 200 276 "-" "-"
+2025-07-02 19:53:08 info: Cache HIT for key: weather_openweathermap_london
+2025-07-02 19:53:08 info: Serving weather data from cache for key: weather_openweathermap_london
+2025-07-02 19:53:08 info: ::ffff:127.0.0.1 - - [02/Jul/2025:23:53:08 +0000] "GET /api/weather?source=openweathermap&city=London HTTP/1.1" 200 276 "-" "-"
+2025-07-02 19:53:08 info: Cache MISS for key: earthquake_usgs_{"source":"usgs","minmagnitude":"5","country":"chile"}
+2025-07-02 19:53:08 info: Filtering USGS data by country: Chile
+2025-07-02 19:53:08 info: Cache SET for key: earthquake_usgs_{"source":"usgs","minmagnitude":"5","country":"chile"} with TTL: 300s
+2025-07-02 19:53:08 info: Earthquake data successfully fetched and cached for key: earthquake_usgs_{"source":"usgs","minmagnitude":"5","country":"chile"}
+2025-07-02 19:53:08 info: ::ffff:127.0.0.1 - - [02/Jul/2025:23:53:08 +0000] "GET /api/earthquakes?source=usgs&minmagnitude=5&country=Chile HTTP/1.1" 200 223 "-" "-"
+2025-07-02 19:53:08 warn: Missing source in earthquake data request {"query":{"minmagnitude":"5"}}
+2025-07-02 19:53:08 info: ::ffff:127.0.0.1 - - [02/Jul/2025:23:53:08 +0000] "GET /api/earthquakes?minmagnitude=5 HTTP/1.1" 400 65 "-" "-"
+2025-07-02 19:53:08 info: Cache MISS for key: earthquake_usgs_{"source":"usgs","minmagnitude":"notanumber"}
+2025-07-02 19:53:08 error: Error in earthquakeController for usgs: {"error":"USGS API error: 404 - undefined","query":{"source":"usgs","minmagnitude":"notanumber"}}
+2025-07-02 19:53:08 info: ::ffff:127.0.0.1 - - [02/Jul/2025:23:53:08 +0000] "GET /api/earthquakes?source=usgs&minmagnitude=notanumber HTTP/1.1" 502 77 "-" "-"
+2025-07-02 19:53:08 warn: Missing source or city in weather data request {"query":{"source":"openweathermap","city":""}}
+2025-07-02 19:53:08 info: ::ffff:127.0.0.1 - - [02/Jul/2025:23:53:08 +0000] "GET /api/weather?source=openweathermap&city= HTTP/1.1" 400 57 "-" "-"
+2025-07-02 19:53:09 info: Cache MISS for key: earthquake_usgs_{"source":"usgs","minmagnitude":"6","country":"peru"}
+2025-07-02 19:53:09 info: Filtering USGS data by country: Peru
+2025-07-02 19:53:09 info: Cache SET for key: earthquake_usgs_{"source":"usgs","minmagnitude":"6","country":"peru"} with TTL: 300s
+2025-07-02 19:53:09 info: Earthquake data successfully fetched and cached for key: earthquake_usgs_{"source":"usgs","minmagnitude":"6","country":"peru"}
+2025-07-02 19:53:09 info: ::ffff:127.0.0.1 - - [02/Jul/2025:23:53:09 +0000] "GET /api/earthquakes?source=usgs&minmagnitude=6&country=Peru HTTP/1.1" 200 218 "-" "-"
+2025-07-02 19:53:09 info: Cache MISS for key: earthquake_usgs_{"source":"usgs","country":"chile"}
+2025-07-02 19:53:09 info: Filtering USGS data by country: Chile
+2025-07-02 19:53:09 info: Cache SET for key: earthquake_usgs_{"source":"usgs","country":"chile"} with TTL: 300s
+2025-07-02 19:53:09 info: Earthquake data successfully fetched and cached for key: earthquake_usgs_{"source":"usgs","country":"chile"}
+2025-07-02 19:53:09 info: ::ffff:127.0.0.1 - - [02/Jul/2025:23:53:09 +0000] "GET /api/earthquakes?source=usgs&country=Chile HTTP/1.1" 200 217 "-" "-"
+2025-07-02 19:53:09 warn: Missing source in earthquake data request {"query":{"minmagnitude":"5"}}
+2025-07-02 19:53:09 info: ::ffff:127.0.0.1 - - [02/Jul/2025:23:53:09 +0000] "GET /api/earthquakes?minmagnitude=5 HTTP/1.1" 400 65 "-" "-"
+2025-07-02 19:53:09 info: Cache MISS for key: earthquake_usgs_{"source":"usgs"}
+2025-07-02 19:53:09 error: Error in earthquakeController for usgs: {"error":"USGS API error: 500 - Internal Server Error","query":{"source":"usgs"}}
+2025-07-02 19:53:09 info: ::ffff:127.0.0.1 - - [02/Jul/2025:23:53:09 +0000] "GET /api/earthquakes?source=usgs HTTP/1.1" 502 89 "-" "-"
+2025-07-02 19:53:09 info: Cache MISS for key: earthquake_usgs_{"source":"usgs"}
+2025-07-02 19:53:09 error: Error in earthquakeController for usgs: {"error":"No response from USGS","query":{"source":"usgs"}}
+2025-07-02 19:53:09 info: ::ffff:127.0.0.1 - - [02/Jul/2025:23:53:09 +0000] "GET /api/earthquakes?source=usgs HTTP/1.1" 504 81 "-" "-"
+2025-07-02 20:36:53 info: Server running on port 5000
+2025-07-02 20:39:43 info: Server running on port 5000
+2025-07-02 20:41:37 info: Server running on port 5000
+2025-07-02 20:41:37 info: ::1 - - [03/Jul/2025:00:41:37 +0000] "GET / HTTP/1.1" 200 34 "-" "Mozilla/5.0 (Windows NT; Windows NT 10.0; en-US) WindowsPowerShell/5.1.26100.4202"
+2025-07-02 20:41:41 info: ::1 - - [03/Jul/2025:00:41:41 +0000] "GET /api-docs HTTP/1.1" 301 158 "-" "Mozilla/5.0 (Windows NT; Windows NT 10.0; en-US) WindowsPowerShell/5.1.26100.4202"
+2025-07-02 20:41:41 info: ::1 - - [03/Jul/2025:00:41:41 +0000] "GET /api-docs/ HTTP/1.1" 200 3106 "-" "Mozilla/5.0 (Windows NT; Windows NT 10.0; en-US) WindowsPowerShell/5.1.26100.4202"
+2025-07-02 20:42:54 info: Server running on port 5000
+2025-07-02 20:43:37 info: Server running on port 5000
+2025-07-02 20:43:37 info: ::1 - - [03/Jul/2025:00:43:37 +0000] "GET / HTTP/1.1" 200 34 "-" "Mozilla/5.0 (Windows NT; Windows NT 10.0; en-US) WindowsPowerShell/5.1.26100.4202"
+2025-07-02 20:43:41 info: ::1 - - [03/Jul/2025:00:43:41 +0000] "GET /api-docs HTTP/1.1" 301 158 "-" "Mozilla/5.0 (Windows NT; Windows NT 10.0; en-US) WindowsPowerShell/5.1.26100.4202"
+2025-07-02 20:43:41 info: ::1 - - [03/Jul/2025:00:43:41 +0000] "GET /api-docs/ HTTP/1.1" 200 3106 "-" "Mozilla/5.0 (Windows NT; Windows NT 10.0; en-US) WindowsPowerShell/5.1.26100.4202"
+2025-07-02 20:43:44 info: ::1 - - [03/Jul/2025:00:43:44 +0000] "GET /api-docs HTTP/1.1" 301 158 "-" "Mozilla/5.0 (Windows NT; Windows NT 10.0; en-US) WindowsPowerShell/5.1.26100.4202"
+2025-07-02 20:43:44 info: ::1 - - [03/Jul/2025:00:43:44 +0000] "GET /api-docs/ HTTP/1.1" 200 3106 "-" "Mozilla/5.0 (Windows NT; Windows NT 10.0; en-US) WindowsPowerShell/5.1.26100.4202"
+2025-07-02 20:43:54 error: Error in weatherController for openweathermap and London: {"error":"OpenWeatherMap API error: 401 - Invalid API key. Please see https://openweathermap.org/faq#error401 for more info.","query":{"source":"openweathermap","city":"London"}}
+2025-07-02 20:43:54 info: ::1 - - [03/Jul/2025:00:43:54 +0000] "GET /api/weather?source=openweathermap&city=London HTTP/1.1" 502 170 "-" "Mozilla/5.0 (Windows NT; Windows NT 10.0; en-US) WindowsPowerShell/5.1.26100.4202"
+2025-07-02 20:44:14 info: Server running on port 5000
+2025-07-02 20:44:39 info: ::1 - - [03/Jul/2025:00:44:39 +0000] "GET / HTTP/1.1" 304 - "-" "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/138.0.0.0 Safari/537.36"
+2025-07-02 20:44:40 info: ::1 - - [03/Jul/2025:00:44:40 +0000] "GET /favicon.ico HTTP/1.1" 404 32 "http://localhost:5000/" "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/138.0.0.0 Safari/537.36"
+2025-07-02 22:19:58 info: Server running on port 5000
+2025-07-02 22:20:08 info: Server running on port 5000
+2025-07-05 13:48:26 info: Server running on port 5000
+2025-07-05 13:53:50 info: ::1 - - [05/Jul/2025:17:53:50 +0000] "GET /api-docs HTTP/1.1" 301 158 "-" "PostmanRuntime/7.44.0"
+2025-07-05 13:53:50 info: ::1 - - [05/Jul/2025:17:53:50 +0000] "GET /api-docs/ HTTP/1.1" 200 3106 "http://localhost:5000/api-docs" "PostmanRuntime/7.44.0"
+2025-07-05 14:07:08 info: ::1 - - [05/Jul/2025:18:07:08 +0000] "GET /auth/register HTTP/1.1" 404 32 "-" "PostmanRuntime/7.44.0"
+2025-07-05 14:07:13 info: ::1 - - [05/Jul/2025:18:07:13 +0000] "POST /auth/register HTTP/1.1" 404 32 "-" "PostmanRuntime/7.44.0"
+2025-07-05 14:08:07 info: ::1 - - [05/Jul/2025:18:08:07 +0000] "POST /auth/register HTTP/1.1" 404 32 "-" "PostmanRuntime/7.44.0"
+2025-07-05 14:08:29 info: ::1 - - [05/Jul/2025:18:08:29 +0000] "POST /auth/register HTTP/1.1" 404 32 "-" "PostmanRuntime/7.44.0"
+2025-07-05 14:09:07 info: ::1 - - [05/Jul/2025:18:09:07 +0000] "GET /auth//weather?source=openweathermap&city=London HTTP/1.1" 404 32 "-" "PostmanRuntime/7.44.0"
+2025-07-05 14:09:16 info: ::1 - - [05/Jul/2025:18:09:16 +0000] "GET /auth//weather?source=openweathermap&city=London HTTP/1.1" 404 32 "-" "PostmanRuntime/7.44.0"
+2025-07-05 14:10:50 info: ::1 - - [05/Jul/2025:18:10:50 +0000] "GET /api/api-docs HTTP/1.1" 404 32 "-" "PostmanRuntime/7.44.0"
+2025-07-05 14:10:54 info: ::1 - - [05/Jul/2025:18:10:54 +0000] "GET /api/api-docs HTTP/1.1" 404 32 "-" "PostmanRuntime/7.44.0"
+2025-07-05 14:11:14 info: Server running on port 5000
+2025-07-05 14:11:40 info: ::1 - - [05/Jul/2025:18:11:40 +0000] "GET /api/api-docs HTTP/1.1" 404 32 "-" "PostmanRuntime/7.44.0"
+2025-07-05 14:11:56 info: ::1 - - [05/Jul/2025:18:11:56 +0000] "GET /api-docs HTTP/1.1" 301 158 "-" "PostmanRuntime/7.44.0"
+2025-07-05 14:11:56 info: ::1 - - [05/Jul/2025:18:11:56 +0000] "GET /api-docs/ HTTP/1.1" 200 3106 "http://localhost:5000/api-docs" "PostmanRuntime/7.44.0"
+2025-07-05 14:12:48 info: ::1 - - [05/Jul/2025:18:12:48 +0000] "POST /auth/register HTTP/1.1" 404 32 "-" "PostmanRuntime/7.44.0"
+2025-07-05 14:12:54 info: ::1 - - [05/Jul/2025:18:12:54 +0000] "POST /api/auth/register HTTP/1.1" 500 62 "-" "PostmanRuntime/7.44.0"
+2025-07-05 14:13:22 info: ::1 - - [05/Jul/2025:18:13:22 +0000] "POST /api/auth/register HTTP/1.1" 400 64 "-" "PostmanRuntime/7.44.0"
+2025-07-05 14:13:43 info: ::1 - - [05/Jul/2025:18:13:43 +0000] "POST /api/auth/login HTTP/1.1" 500 60 "-" "PostmanRuntime/7.44.0"
+2025-07-05 14:13:48 info: ::1 - - [05/Jul/2025:18:13:48 +0000] "POST /api/auth/login HTTP/1.1" 500 60 "-" "PostmanRuntime/7.44.0"
+2025-07-05 14:14:38 info: ::1 - - [05/Jul/2025:18:14:38 +0000] "GET /api/auth/login HTTP/1.1" 404 32 "-" "PostmanRuntime/7.44.0"
+2025-07-05 14:14:56 info: ::1 - - [05/Jul/2025:18:14:56 +0000] "POST /api/auth/login HTTP/1.1" 500 60 "-" "PostmanRuntime/7.44.0"
+2025-07-05 15:35:47 info: Server running on port 5000
+2025-07-05 15:35:56 info: ::1 - - [05/Jul/2025:19:35:56 +0000] "GET / HTTP/1.1" 200 34 "-" "Mozilla/5.0 (Windows NT; Windows NT 10.0; en-US) WindowsPowerShell/5.1.26100.4202"
+2025-07-05 15:36:15 info: ::1 - - [05/Jul/2025:19:36:15 +0000] "POST /api/auth/register HTTP/1.1" 500 62 "-" "Mozilla/5.0 (Windows NT; Windows NT 10.0; en-US) WindowsPowerShell/5.1.26100.4202"
+2025-07-05 15:44:09 info: ::1 - - [05/Jul/2025:19:44:09 +0000] "POST /api/auth/register HTTP/1.1" 400 64 "-" "Mozilla/5.0 (Windows NT; Windows NT 10.0; en-US) WindowsPowerShell/5.1.26100.4202"
+2025-07-05 15:44:12 info: ::1 - - [05/Jul/2025:19:44:12 +0000] "GET / HTTP/1.1" 200 34 "-" "Mozilla/5.0 (Windows NT; Windows NT 10.0; en-US) WindowsPowerShell/5.1.26100.4202"
+2025-07-05 15:44:15 info: ::1 - - [05/Jul/2025:19:44:15 +0000] "POST /api/auth/register HTTP/1.1" 400 64 "-" "Mozilla/5.0 (Windows NT; Windows NT 10.0; en-US) WindowsPowerShell/5.1.26100.4202"
+2025-07-05 15:45:24 info: Server running on port 5000
+2025-07-05 15:46:55 info: ::1 - - [05/Jul/2025:19:46:55 +0000] "POST /api/auth/register HTTP/1.1" 500 62 "-" "PostmanRuntime/7.44.0"
+2025-07-05 15:47:39 info: ::1 - - [05/Jul/2025:19:47:39 +0000] "POST /api/auth/register HTTP/1.1" 400 64 "-" "PostmanRuntime/7.44.0"
+2025-07-05 15:47:55 info: ::1 - - [05/Jul/2025:19:47:55 +0000] "POST /api/auth/login HTTP/1.1" 500 60 "-" "PostmanRuntime/7.44.0"
+2025-07-05 15:47:57 info: ::1 - - [05/Jul/2025:19:47:57 +0000] "POST /api/auth/login HTTP/1.1" 500 60 "-" "PostmanRuntime/7.44.0"
+2025-07-05 15:48:20 error: Error in weatherController for openweathermap and London: {"error":"OpenWeatherMap API error: 401 - Invalid API key. Please see https://openweathermap.org/faq#error401 for more info.","query":{"source":"openweathermap","city":"London"}}
+2025-07-05 15:48:20 info: ::1 - - [05/Jul/2025:19:48:20 +0000] "GET /api/weather?source=openweathermap&city=London HTTP/1.1" 502 170 "-" "PostmanRuntime/7.44.0"
+2025-07-05 20:49:20 info: Server running on port 5000
+2025-07-05 20:50:09 error: Error in weatherController for weatherapi and London: {"error":"WeatherAPI API error: 401 - API key is invalid or not provided.","query":{"source":"weatherapi","city":"London"}}
+2025-07-05 20:50:09 info: ::1 - - [06/Jul/2025:00:50:09 +0000] "GET /api/weather?source=weatherapi&city=London HTTP/1.1" 502 115 "-" "Mozilla/5.0 (Windows NT; Windows NT 10.0; en-US) WindowsPowerShell/5.1.26100.4202"
+2025-07-05 20:50:11 error: Error in weatherController for weatherapi and London: {"error":"WeatherAPI API error: 401 - API key is invalid or not provided.","query":{"source":"weatherapi","city":"London"}}
+2025-07-05 20:50:11 info: ::1 - - [06/Jul/2025:00:50:11 +0000] "GET /api/weather?source=weatherapi&city=London HTTP/1.1" 502 115 "-" "Mozilla/5.0 (Windows NT; Windows NT 10.0; en-US) WindowsPowerShell/5.1.26100.4202"
+2025-07-05 20:53:49 error: Error in weatherController for weatherapi and London: {"error":"WeatherAPI API error: 401 - API key is invalid or not provided.","query":{"source":"weatherapi","city":"London"}}
+2025-07-05 20:53:49 info: ::1 - - [06/Jul/2025:00:53:49 +0000] "GET /api/weather?source=weatherapi&city=London HTTP/1.1" 502 115 "-" "PostmanRuntime/7.44.0"
+2025-07-05 20:54:42 error: Error in weatherController for weatherapi and London: {"error":"WeatherAPI API error: 401 - API key is invalid or not provided.","query":{"source":"weatherapi","city":"London"}}
+2025-07-05 20:54:42 info: ::1 - - [06/Jul/2025:00:54:42 +0000] "GET /api/weather?source=weatherapi&city=London HTTP/1.1" 502 115 "-" "PostmanRuntime/7.44.0"
+2025-07-05 20:55:45 info: Server running on port 5000
+2025-07-05 20:55:59 error: Error in weatherController for weatherapi and London: {"error":"WeatherAPI API error: 401 - API key is invalid or not provided.","query":{"source":"weatherapi","city":"London"}}
+2025-07-05 20:55:59 info: ::1 - - [06/Jul/2025:00:55:59 +0000] "GET /api/weather?source=weatherapi&city=London HTTP/1.1" 502 115 "-" "PostmanRuntime/7.44.0"
+2025-07-05 20:56:01 error: Error in weatherController for weatherapi and London: {"error":"WeatherAPI API error: 401 - API key is invalid or not provided.","query":{"source":"weatherapi","city":"London"}}
+2025-07-05 20:56:01 info: ::1 - - [06/Jul/2025:00:56:01 +0000] "GET /api/weather?source=weatherapi&city=London HTTP/1.1" 502 115 "-" "PostmanRuntime/7.44.0"
+2025-07-05 20:57:25 info: Server running on port 5000
+2025-07-05 20:58:54 info: Server running on port 5000
+2025-07-05 20:59:32 info: Server running on port 5000
+2025-07-05 21:03:02 info: Server running on port 5000
+2025-07-05 21:03:37 info: Server running on port 5000
+2025-07-05 21:04:56 info: Server running on port 5000
+2025-07-05 21:06:29 info: Server running on port 5000
+2025-07-05 21:07:06 info: Server running on port 5000
+2025-07-05 21:08:38 info: Server running on port 5000
+2025-07-05 21:13:53 info: Server running on port 5000
+2025-07-05 21:17:15 info: Server running on port 5000
+2025-07-05 21:50:12 info: Server running on port 5000
+2025-07-05 23:10:22 info: Server running on port 5000
+2025-07-05 23:10:49 info: Weather data successfully fetched for weatherapi and London
+2025-07-05 23:10:49 info: ::1 - - [06/Jul/2025:03:10:49 +0000] "GET /api/weather?source=weatherapi&city=London HTTP/1.1" 200 275 "-" "PostmanRuntime/7.44.0"
+2025-07-05 23:18:10 info: Server running on port 5000
+2025-07-05 23:18:15 info: Weather data successfully fetched for weatherapi and London
+2025-07-05 23:18:15 info: ::1 - - [06/Jul/2025:03:18:15 +0000] "GET /api/weather?source=weatherapi&city=London HTTP/1.1" 200 281 "-" "PostmanRuntime/7.44.0"
+2025-07-05 23:18:32 info: Weather data successfully fetched for weatherapi and London
+2025-07-05 23:18:32 info: ::1 - - [06/Jul/2025:03:18:32 +0000] "GET /api/weather?source=weatherapi&city=London HTTP/1.1" 200 281 "-" "PostmanRuntime/7.44.0"
+2025-07-05 23:19:03 info: Server running on port 5000
+2025-07-05 23:19:08 info: Weather data successfully fetched for weatherapi and London
+2025-07-05 23:19:08 info: ::1 - - [06/Jul/2025:03:19:08 +0000] "GET /api/weather?source=weatherapi&city=London HTTP/1.1" 200 281 "-" "PostmanRuntime/7.44.0"
+2025-07-05 23:19:19 info: Weather data successfully fetched for weatherapi and London
+2025-07-05 23:19:19 info: ::1 - - [06/Jul/2025:03:19:19 +0000] "GET /api/weather?source=weatherapi&city=London HTTP/1.1" 200 281 "-" "PostmanRuntime/7.44.0"
+2025-07-05 23:19:32 info: Weather data successfully fetched for weatherapi and London
+2025-07-05 23:19:32 info: ::1 - - [06/Jul/2025:03:19:32 +0000] "GET /api/weather?source=weatherapi&city=London HTTP/1.1" 200 281 "-" "PostmanRuntime/7.44.0"
+2025-07-05 23:23:29 info: Server running on port 5000
+2025-07-05 23:23:50 info: Weather data successfully fetched for openweathermap and London
+2025-07-05 23:23:50 info: ::1 - - [06/Jul/2025:03:23:50 +0000] "GET /api/weather?source=openweathermap&city=London HTTP/1.1" 200 289 "-" "PostmanRuntime/7.44.0"
+2025-07-05 23:31:08 info: Server running on port 5000
+2025-07-05 23:31:35 info: Server running on port 5000
+2025-07-05 23:31:44 info: Earthquake data successfully fetched for usgs
+2025-07-05 23:31:44 info: ::1 - - [06/Jul/2025:03:31:44 +0000] "GET /api/earthquakes?source=usgs&minmagnitude=5&limit=1 HTTP/1.1" 200 268 "-" "PostmanRuntime/7.44.0"
+2025-07-05 23:33:43 info: Server running on port 5000
+2025-07-05 23:33:55 info: Earthquake data successfully fetched for usgs
+2025-07-05 23:33:55 info: ::1 - - [06/Jul/2025:03:33:55 +0000] "GET /api/earthquakes?source=usgs&minmagnitude=5&limit=1 HTTP/1.1" 200 268 "-" "PostmanRuntime/7.44.0"
+2025-07-05 23:34:12 info: Earthquake data successfully fetched for usgs
+2025-07-05 23:34:12 info: ::1 - - [06/Jul/2025:03:34:12 +0000] "GET /api/earthquakes?source=usgs&minmagnitude=5&limit=1 HTTP/1.1" 200 268 "-" "PostmanRuntime/7.44.0"
+2025-07-05 23:34:56 info: Server running on port 5000
+2025-07-05 23:35:02 info: Earthquake data successfully fetched for usgs
+2025-07-05 23:35:02 info: ::1 - - [06/Jul/2025:03:35:02 +0000] "GET /api/earthquakes?source=usgs&minmagnitude=5&limit=1 HTTP/1.1" 200 268 "-" "PostmanRuntime/7.44.0"
+2025-07-05 23:35:08 info: Weather data successfully fetched for openweathermap and London
+2025-07-05 23:35:08 info: ::1 - - [06/Jul/2025:03:35:08 +0000] "GET /api/weather?source=openweathermap&city=London HTTP/1.1" 200 284 "-" "PostmanRuntime/7.44.0"
+2025-07-05 23:45:31 info: Server running on port 5000
+2025-07-05 23:45:39 info: Weather data successfully fetched for weatherapi and London
+2025-07-05 23:45:39 info: ::1 - - [06/Jul/2025:03:45:39 +0000] "GET /api/weather?source=weatherapi&city=London HTTP/1.1" 200 281 "-" "PostmanRuntime/7.44.1"
+2025-07-05 23:45:52 info: Earthquake data successfully fetched for usgs
+2025-07-05 23:45:52 info: ::1 - - [06/Jul/2025:03:45:52 +0000] "GET /api/earthquakes?source=usgs&minmagnitude=5&limit=1 HTTP/1.1" 200 268 "-" "PostmanRuntime/7.44.1"
+2025-07-05 23:45:58 info: Earthquake data successfully fetched for usgs
+2025-07-05 23:45:58 info: ::1 - - [06/Jul/2025:03:45:58 +0000] "GET /api/earthquakes?source=usgs&minmagnitude=5&limit=1 HTTP/1.1" 200 268 "-" "PostmanRuntime/7.44.1"
+2025-07-05 23:47:38 info: Server running on port 5000
+2025-07-05 23:56:29 info: Server running on port 5000
+2025-07-05 23:57:28 info: Server running on port 5000
+2025-07-05 23:58:08 info: Server running on port 5000
+2025-07-06 00:00:52 info: Server running on port 5000
+2025-07-06 00:01:42 info: Server running on port 5000
+2025-07-06 00:04:10 info: Server running on port 5000
+2025-07-06 00:14:02 info: Server running on port 5000
+2025-07-06 00:17:58 info: Server running on port 5000
+2025-07-06 00:18:31 info: Server running on port 5000
+2025-07-06 00:19:40 info: Server running on port 5000
+2025-07-06 00:21:48 info: Server running on port 5000
+2025-07-06 00:22:44 info: Server running on port 5000
+2025-07-06 00:29:35 info: Server running on port 5000
+2025-07-06 00:33:24 info: Weather data successfully fetched for weatherapi and London
+2025-07-06 00:33:25 info: ::1 - - [06/Jul/2025:04:33:25 +0000] "GET /api/weather?source=weatherapi&city=London HTTP/1.1" 200 278 "-" "PostmanRuntime/7.44.1"
