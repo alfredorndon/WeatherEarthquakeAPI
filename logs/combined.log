@@ -254,3 +254,41 @@
 2025-07-06 00:29:35 info: Server running on port 5000
 2025-07-06 00:33:24 info: Weather data successfully fetched for weatherapi and London
 2025-07-06 00:33:25 info: ::1 - - [06/Jul/2025:04:33:25 +0000] "GET /api/weather?source=weatherapi&city=London HTTP/1.1" 200 278 "-" "PostmanRuntime/7.44.1"
+2025-07-06 11:11:21 info: Server running on port 5000
+2025-07-06 11:11:27 info: Weather data successfully fetched for weatherapi and London
+2025-07-06 11:11:27 info: ::1 - - [06/Jul/2025:15:11:27 +0000] "GET /api/weather?source=weatherapi&city=London HTTP/1.1" 200 273 "-" "PostmanRuntime/7.44.1"
+2025-07-06 11:16:02 info: ::1 - - [06/Jul/2025:15:16:02 +0000] "POST /api/auth/register HTTP/1.1" 201 245 "-" "PostmanRuntime/7.44.1"
+2025-07-06 11:17:43 info: Server running on port 5000
+2025-07-06 11:18:01 info: Weather data successfully fetched for weatherapi and London
+2025-07-06 11:18:01 info: ::1 - - [06/Jul/2025:15:18:01 +0000] "GET /api/weather?source=weatherapi&city=London HTTP/1.1" 200 279 "-" "PostmanRuntime/7.44.1"
+2025-07-06 11:25:37 info: Server running on port 5000
+2025-07-06 11:25:57 info: Earthquake data successfully fetched for usgs
+2025-07-06 11:25:57 info: ::1 - - [06/Jul/2025:15:25:57 +0000] "GET /api/earthquakes?source=usgs&minmagnitude=5&limit=1 HTTP/1.1" 200 263 "-" "PostmanRuntime/7.44.1"
+2025-07-06 11:27:18 info: ::1 - - [06/Jul/2025:15:27:18 +0000] "POST /api/auth/register HTTP/1.1" 201 245 "-" "PostmanRuntime/7.44.1"
+2025-07-06 11:28:34 info: Weather data successfully fetched for weatherapi and London
+2025-07-06 11:28:34 info: ::1 - - [06/Jul/2025:15:28:34 +0000] "GET /api/weather?source=weatherapi&city=London HTTP/1.1" 200 279 "-" "PostmanRuntime/7.44.1"
+2025-07-06 11:28:52 info: Earthquake data successfully fetched for usgs
+2025-07-06 11:28:52 info: ::1 - - [06/Jul/2025:15:28:52 +0000] "GET /api/earthquakes?source=usgs&minmagnitude=5&limit=1 HTTP/1.1" 200 263 "-" "PostmanRuntime/7.44.1"
+2025-07-06 11:29:46 info: ::1 - - [06/Jul/2025:15:29:46 +0000] "POST /api/auth/register HTTP/1.1" 201 243 "-" "PostmanRuntime/7.44.1"
+2025-07-06 11:30:19 info: ::1 - - [06/Jul/2025:15:30:19 +0000] "POST /api/auth/login HTTP/1.1" 200 243 "-" "PostmanRuntime/7.44.1"
+2025-07-06 11:34:01 info: ::1 - - [06/Jul/2025:15:34:01 +0000] "POST /api/weather/reports HTTP/1.1" 401 64 "-" "PostmanRuntime/7.44.1"
+2025-07-06 11:34:34 info: ::1 - - [06/Jul/2025:15:34:34 +0000] "POST /api/weather/reports HTTP/1.1" 401 43 "-" "PostmanRuntime/7.44.1"
+2025-07-06 11:35:10 info: Weather report created successfully {"reportId":"686a97ae832424d5ee6e90ab","user":"manolo@gmail.com"}
+2025-07-06 11:35:10 info: ::1 - - [06/Jul/2025:15:35:10 +0000] "POST /api/weather/reports HTTP/1.1" 201 224 "-" "PostmanRuntime/7.44.1"
+2025-07-06 11:36:54 info: Weather reports fetched successfully with filters {"options":{},"totalCount":4,"user":"manolo@gmail.com"}
+2025-07-06 11:36:54 info: ::1 - - [06/Jul/2025:15:36:54 +0000] "GET /api/weather/reports? HTTP/1.1" 200 969 "-" "PostmanRuntime/7.44.1"
+2025-07-06 11:37:09 info: ::1 - - [06/Jul/2025:15:37:09 +0000] "DELETE /api/weather/reports/686a97ae832424d5ee6e90ab HTTP/1.1" 401 64 "-" "PostmanRuntime/7.44.1"
+2025-07-06 11:37:24 info: Weather report deleted successfully {"reportId":"686a97ae832424d5ee6e90ab","user":"manolo@gmail.com"}
+2025-07-06 11:37:24 info: ::1 - - [06/Jul/2025:15:37:24 +0000] "DELETE /api/weather/reports/686a97ae832424d5ee6e90ab HTTP/1.1" 200 45 "-" "PostmanRuntime/7.44.1"
+2025-07-06 11:38:48 info: Earthquake reports fetched successfully with filters {"options":{},"totalCount":1,"user":"manolo@gmail.com"}
+2025-07-06 11:38:48 info: ::1 - - [06/Jul/2025:15:38:48 +0000] "GET /api/earthquakes/reports? HTTP/1.1" 200 281 "-" "PostmanRuntime/7.44.1"
+2025-07-06 11:39:42 info: Earthquake report created successfully {"reportId":"686a98be832424d5ee6e90b6","user":"manolo@gmail.com"}
+2025-07-06 11:39:42 info: ::1 - - [06/Jul/2025:15:39:42 +0000] "POST /api/earthquakes/reports HTTP/1.1" 201 207 "-" "PostmanRuntime/7.44.1"
+2025-07-06 11:39:47 info: Earthquake reports fetched successfully with filters {"options":{},"totalCount":2,"user":"manolo@gmail.com"}
+2025-07-06 11:39:47 info: ::1 - - [06/Jul/2025:15:39:47 +0000] "GET /api/earthquakes/reports? HTTP/1.1" 200 489 "-" "PostmanRuntime/7.44.1"
+2025-07-06 11:40:01 info: Weather report not found for deletion {"reportId":"686a04294f65c10cedcbd297","user":"manolo@gmail.com"}
+2025-07-06 11:40:01 info: ::1 - - [06/Jul/2025:15:40:01 +0000] "DELETE /api/weather/reports/686a04294f65c10cedcbd297 HTTP/1.1" 404 47 "-" "PostmanRuntime/7.44.1"
+2025-07-06 11:40:13 info: Earthquake report deleted successfully {"reportId":"686a04294f65c10cedcbd297","user":"manolo@gmail.com"}
+2025-07-06 11:40:13 info: ::1 - - [06/Jul/2025:15:40:13 +0000] "DELETE /api/earthquakes/reports/686a04294f65c10cedcbd297 HTTP/1.1" 200 45 "-" "PostmanRuntime/7.44.1"
+2025-07-06 11:40:16 info: Earthquake reports fetched successfully with filters {"options":{},"totalCount":1,"user":"manolo@gmail.com"}
+2025-07-06 11:40:16 info: ::1 - - [06/Jul/2025:15:40:16 +0000] "GET /api/earthquakes/reports? HTTP/1.1" 200 268 "-" "PostmanRuntime/7.44.1"
