@@ -15,3 +15,10 @@
 2025-07-02 19:53:09 error: Error in earthquakeController for usgs: {"error":"USGS API error: 500 - Internal Server Error","query":{"source":"usgs"}}
 2025-07-02 19:53:09 error: Error in earthquakeController for usgs: {"error":"No response from USGS","query":{"source":"usgs"}}
 2025-07-02 20:43:54 error: Error in weatherController for openweathermap and London: {"error":"OpenWeatherMap API error: 401 - Invalid API key. Please see https://openweathermap.org/faq#error401 for more info.","query":{"source":"openweathermap","city":"London"}}
+2025-07-05 15:48:20 error: Error in weatherController for openweathermap and London: {"error":"OpenWeatherMap API error: 401 - Invalid API key. Please see https://openweathermap.org/faq#error401 for more info.","query":{"source":"openweathermap","city":"London"}}
+2025-07-05 20:50:09 error: Error in weatherController for weatherapi and London: {"error":"WeatherAPI API error: 401 - API key is invalid or not provided.","query":{"source":"weatherapi","city":"London"}}
+2025-07-05 20:50:11 error: Error in weatherController for weatherapi and London: {"error":"WeatherAPI API error: 401 - API key is invalid or not provided.","query":{"source":"weatherapi","city":"London"}}
+2025-07-05 20:53:49 error: Error in weatherController for weatherapi and London: {"error":"WeatherAPI API error: 401 - API key is invalid or not provided.","query":{"source":"weatherapi","city":"London"}}
+2025-07-05 20:54:42 error: Error in weatherController for weatherapi and London: {"error":"WeatherAPI API error: 401 - API key is invalid or not provided.","query":{"source":"weatherapi","city":"London"}}
+2025-07-05 20:55:59 error: Error in weatherController for weatherapi and London: {"error":"WeatherAPI API error: 401 - API key is invalid or not provided.","query":{"source":"weatherapi","city":"London"}}
+2025-07-05 20:56:01 error: Error in weatherController for weatherapi and London: {"error":"WeatherAPI API error: 401 - API key is invalid or not provided.","query":{"source":"weatherapi","city":"London"}}

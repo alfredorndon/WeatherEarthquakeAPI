@@ -1,4 +1,6 @@
 require('dotenv').config();
+// console.log("aaaaa");
+// console.log('TEST ENV:', process.env.WEATHERAPI_KEY);
 const express = require('express');
 const connectDB = require('./config/db'); // Asumiendo que guardaste el archivo de conexión ahí
 const weatherRoutes = require('./routes/weatherRoutes');
